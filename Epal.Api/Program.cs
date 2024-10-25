@@ -21,14 +21,6 @@ builder.Services.AddMediatR(b =>
 builder.Services.AddDbContext<IEpalDbContext, EpalDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")!));
 
-/*if (args.Length > 0 && args[0] == "migrate")
-{
-    var factory = CreateDbContextFactory(builder.Configuration);
-    using var dbContext = factory.CreateDbContext(args.Skip(1).ToArray());
-    dbContext.Database.Migrate();
-    return;
-}*/
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
