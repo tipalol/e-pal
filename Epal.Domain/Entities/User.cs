@@ -1,4 +1,5 @@
 using Epal.Domain.Entities.Base;
+using Epal.Domain.Enums;
 
 namespace Epal.Domain.Entities;
 
@@ -13,15 +14,12 @@ public class User : DateTrackedEntity
         Username = userName;
         Email = email;
         PasswordHash = passwordHash;
-        Balance = 0;
-        EmailConfirmed = false;
-        IsBanned = false;
+        Status = UserStatus.Created;
     }
     
     public string Email { get; set; }
-    public bool EmailConfirmed { get; set; }
     public string Username { get; set; }
     public string PasswordHash { get; set; }
-    public bool IsBanned { get; set; }
     public decimal Balance { get; set; }
+    public UserStatus Status { get; set; }
 }
