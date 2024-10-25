@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epal.Api", "Epal.Api\Epal.Api.csproj", "{864BFA5F-F377-4360-B84D-371157C2F0AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epal.Domain", "Epal.Domain\Epal.Domain.csproj", "{22435944-2166-468A-AEA7-5CC5621A7C79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epal.Application", "Epal.Application\Epal.Application.csproj", "{B20430EA-DB94-4E3E-ACEA-0D0003522CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epal.Infrastructure", "Epal.Infrastructure\Epal.Infrastructure.csproj", "{E8AC0969-3795-41C9-A328-0D6546EA7EBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epal.Tests", "Epal.Tests\Epal.Tests.csproj", "{627D79F4-8516-4558-A2F8-1BC433E1D04E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{864BFA5F-F377-4360-B84D-371157C2F0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864BFA5F-F377-4360-B84D-371157C2F0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864BFA5F-F377-4360-B84D-371157C2F0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864BFA5F-F377-4360-B84D-371157C2F0AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22435944-2166-468A-AEA7-5CC5621A7C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22435944-2166-468A-AEA7-5CC5621A7C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22435944-2166-468A-AEA7-5CC5621A7C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22435944-2166-468A-AEA7-5CC5621A7C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B20430EA-DB94-4E3E-ACEA-0D0003522CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B20430EA-DB94-4E3E-ACEA-0D0003522CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B20430EA-DB94-4E3E-ACEA-0D0003522CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B20430EA-DB94-4E3E-ACEA-0D0003522CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8AC0969-3795-41C9-A328-0D6546EA7EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8AC0969-3795-41C9-A328-0D6546EA7EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8AC0969-3795-41C9-A328-0D6546EA7EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8AC0969-3795-41C9-A328-0D6546EA7EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627D79F4-8516-4558-A2F8-1BC433E1D04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627D79F4-8516-4558-A2F8-1BC433E1D04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627D79F4-8516-4558-A2F8-1BC433E1D04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627D79F4-8516-4558-A2F8-1BC433E1D04E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
