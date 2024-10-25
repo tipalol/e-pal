@@ -1,14 +1,16 @@
+using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Users.GetAll;
 
 public record GetUsersRequest : IRequest<IEnumerable<User>>;
 
-internal sealed class Handler : IRequestHandler<GetUsersRequest, IEnumerable<User>>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUsersRequest, IEnumerable<User>>
 {
-    public Task<IEnumerable<User>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<User>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
-        return Task.FromResult<IEnumerable<User>>(new List<User>());
+        return await context.Users.ToListAsync(cancellationToken);
     }
 }

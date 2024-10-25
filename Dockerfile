@@ -8,6 +8,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Epal.Api/Epal.Api.csproj", "Epal.Api/"]
+COPY ["Epal.Application/Epal.Application.csproj", "Epal.Application/"]
+COPY ["Epal.Infrastructure/Epal.Infrastructure.csproj", "Epal.Infrastructure/"]
+COPY ["Epal.Domain/Epal.Domain.csproj", "Epal.Domain/"]
+COPY ["Epal.Tests/Epal.Tests.csproj", "Epal.Tests/"]
 RUN dotnet restore "Epal.Api/Epal.Api.csproj"
 COPY . .
 WORKDIR "/src/Epal.Api"

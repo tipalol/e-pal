@@ -1,14 +1,23 @@
+using System.ComponentModel;
+using Epal.Application.Interfaces;
+using Epal.Application.Services;
 using Epal.Domain.Entities;
 using MediatR;
 
 namespace Epal.Application.Features.Users.Add;
 
-public record CreateUserRequest(Guid Id) : IRequest<User>;
+public record CreateUserRequest(string Username, string Email, [PasswordPropertyText] string Password) : IRequest<User>;
 
-internal sealed class Handler : IRequestHandler<CreateUserRequest, User>
+internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService) : IRequestHandler<CreateUserRequest, User>
 {
-    public Task<User> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+    public async Task<User> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var passwordHash = passwordService.HashPassword(request.Password);
+        var user = new User(request.Email, passwordHash);
+
+        await context.Users.AddAsync(user, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+        
+        return user;
     }
 }

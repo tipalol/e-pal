@@ -7,7 +7,7 @@ using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Epal.Api.Controllers;
+namespace Epal.Api.Controllers.Admin;
 
 public class UsersController(ISender sender) : RestController(sender)
 {
@@ -20,8 +20,8 @@ public class UsersController(ISender sender) : RestController(sender)
         => await Sender.Send(new GetUserRequest(id));
     
     [HttpPost]
-    public async Task<User> AddUser()
-        => await Sender.Send(new CreateUserRequest(Guid.NewGuid()));
+    public async Task<User> AddUser(CreateUserRequest request)
+        => await Sender.Send(request);
     
     [HttpDelete("{id:guid}")]
     public async Task DeleteUser([FromRoute(Name = "id")] Guid id)

@@ -1,18 +1,17 @@
+using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Users.Get;
 
 public record GetUserRequest(Guid Id) : IRequest<User>;
 
-internal sealed class Handler : IRequestHandler<GetUserRequest, User>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUserRequest, User>
 {
-    public Task<User> Handle(GetUserRequest request, CancellationToken cancellationToken)
+    public async Task<User> Handle(GetUserRequest request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new User()
-        {
-            Email = "123@123.ru",
-            Password = "12352452345"
-        });
+        var user = context.Users.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        return await user ?? throw new ArgumentException($"Пользователь с ID {request.Id} не найден");
     }
 }
