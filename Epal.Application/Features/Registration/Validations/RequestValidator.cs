@@ -1,18 +1,12 @@
-﻿using Epal.Application.Features.Registration.Post;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Epal.Application.Features.Registration.Validations;
 
-public class DtoValidator : AbstractValidator<CreateRegisterDtoRequest>
+public class RequestValidator : AbstractValidator<RegistrationRequest>
 {
 
-    public DtoValidator()
+    public RequestValidator()
     {
-        RuleFor(user => user.Username)
-            .NotEmpty().WithMessage("Имя пользователя не может быть пустым")
-            .MinimumLength(3).WithMessage("Имя пользователя должно быть не менее 3 символов")
-            .MaximumLength(50).WithMessage("Имя пользователя не может быть длиннее 50 символов");
-
         RuleFor(user => user.Email)
             .NotEmpty().WithMessage("Email не может быть пустым")
             .EmailAddress().WithMessage("Неправильный формат email");

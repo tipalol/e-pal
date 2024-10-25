@@ -9,16 +9,15 @@ public class User : DateTrackedEntity
     {
     }
     
-    public User(string userName, string email, string passwordHash)
+    public User(string email, string passwordHash)
     {
-        Username = userName;
         Email = email;
         PasswordHash = passwordHash;
         Status = UserStatus.Created;
     }
     
     public string Email { get; set; }
-    public string Username { get; set; }
+    public string? Username { get; set; }
     public string PasswordHash { get; set; }
     public decimal Balance { get; set; }
     public UserStatus Status { get; set; }
