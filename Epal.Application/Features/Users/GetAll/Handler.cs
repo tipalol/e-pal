@@ -5,7 +5,7 @@ namespace Epal.Application.Features.Users.GetAll;
 
 public record GetUsersRequest : IRequest<IEnumerable<User>>;
 
-public class Handler : IRequestHandler<GetUsersRequest, IEnumerable<User>>
+internal sealed class Handler : IRequestHandler<GetUsersRequest, IEnumerable<User>>
 {
     public Task<IEnumerable<User>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
