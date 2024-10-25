@@ -1,3 +1,5 @@
+using Epal.Domain.Entities.Base;
+
 namespace Epal.Domain.Entities;
 
 public class User : DateTrackedEntity

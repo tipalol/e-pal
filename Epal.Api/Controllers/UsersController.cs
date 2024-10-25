@@ -1,3 +1,4 @@
+using Epal.Api.Controllers.Base;
 using Epal.Application.Features.Users.Get;
 using Epal.Application.Features.Users.GetAll;
 using Epal.Domain.Entities;

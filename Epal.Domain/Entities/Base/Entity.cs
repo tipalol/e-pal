@@ -1,4 +1,4 @@
-namespace Epal.Domain.Entities;
+namespace Epal.Domain.Entities.Base;
 
 public class Entity
 {

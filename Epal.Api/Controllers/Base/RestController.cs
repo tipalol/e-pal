@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Epal.Api.Controllers;
+namespace Epal.Api.Controllers.Base;
 
 [ApiController]
 [Route("api/[controller]")]
