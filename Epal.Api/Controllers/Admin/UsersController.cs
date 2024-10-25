@@ -7,7 +7,7 @@ using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Epal.Api.Controllers;
+namespace Epal.Api.Controllers.Admin;
 
 public class UsersController(ISender sender) : RestController(sender)
 {
