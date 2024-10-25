@@ -4,21 +4,24 @@ namespace Epal.Domain.Entities;
 
 public class User : DateTrackedEntity
 {
-    public User(){}
+    public User()
+    {
+    }
+    
     public User(string userName, string email, string passwordHash)
     {
-        UserName = userName;
+        Username = userName;
         Email = email;
         PasswordHash = passwordHash;
         Balance = 0;
         EmailConfirmed = false;
-        isBanned = false;
+        IsBanned = false;
     }
+    
     public string Email { get; set; }
     public bool EmailConfirmed { get; set; }
-    public string UserName { get; set; }
+    public string Username { get; set; }
     public string PasswordHash { get; set; }
-    public bool isBanned { get; set; }//Banned
-    //public int AccessFiledCount {get;set;}
+    public bool IsBanned { get; set; }
     public decimal Balance { get; set; }
 }

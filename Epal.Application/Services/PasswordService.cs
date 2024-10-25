@@ -1,17 +1,14 @@
 ﻿using System.Security.Cryptography;
+using Epal.Application.Interfaces;
 
 namespace Epal.Application.Services;
 
-public static class PasswordService
+public class PasswordService : IPasswordService
 {
-    public static string HashPassword(string password)
+    public string HashPassword(string password)
     {
-        // Используем алгоритм SHA-256
-        using (SHA256 sha256 = SHA256.Create())
-        {
-            byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
-            byte[] hashBytes = sha256.ComputeHash(passwordBytes);
-            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-        }
+        var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+        var hashBytes = SHA256.HashData(passwordBytes);
+        return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 }

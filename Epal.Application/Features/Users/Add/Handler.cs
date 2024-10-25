@@ -6,24 +6,18 @@ using MediatR;
 
 namespace Epal.Application.Features.Users.Add;
 
-public record CreateUserRequest(string Username, string Email, [PasswordPropertyText] string password) : IRequest<User>;
+public record CreateUserRequest(string Username, string Email, [PasswordPropertyText] string Password) : IRequest<User>;
 
-internal sealed class Handler(IEpalDbContext context) : IRequestHandler<CreateUserRequest, User>
+internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService) : IRequestHandler<CreateUserRequest, User>
 {
     public async Task<User> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        string passwordHash = PasswordService.HashPassword(request.password);
+        var passwordHash = passwordService.HashPassword(request.Password);
         var user = new User(request.Username, request.Email, passwordHash);
-        try
-        {
-            await context.Users.AddAsync(user, cancellationToken);
-            await context.SaveChangesAsync(cancellationToken);
-            return user;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+
+        await context.Users.AddAsync(user, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+        
+        return user;
     }
 }
