@@ -1,6 +1,6 @@
 namespace Epal.Domain.Entities.Base;
 
-public class Entity
+public abstract class Entity
 {
     public Guid Id { get; protected set; }
 
