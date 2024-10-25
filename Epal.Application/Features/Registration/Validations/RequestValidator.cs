@@ -16,7 +16,7 @@ public class RequestValidator : AbstractValidator<RegistrationRequest>
             .MinimumLength(8).WithMessage("Пароль должен быть не менее 8 символов")
             .Must(password => password.Any(char.IsDigit)).WithMessage("Пароль должен содержать хотя бы одну цифру")
             .Must(password => password.Any(char.IsUpper)).WithMessage("Пароль должен содержать хотя бы одну заглавную букву");
-        
+
     }
     
 }
