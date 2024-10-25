@@ -1,10 +1,9 @@
-﻿using Epal.Application.Features.Registration.Models;
-using Epal.Application.Interfaces;
+﻿using Epal.Application.Features.Registration.Post;
 using FluentValidation;
 
 namespace Epal.Application.Features.Registration.Validations;
 
-public class DtoValidator : AbstractValidator<RegisterDto>
+public class DtoValidator : AbstractValidator<CreateRegisterDtoRequest>
 {
 
     public DtoValidator()
@@ -24,9 +23,6 @@ public class DtoValidator : AbstractValidator<RegisterDto>
             .Must(password => password.Any(char.IsDigit)).WithMessage("Пароль должен содержать хотя бы одну цифру")
             .Must(password => password.Any(char.IsUpper)).WithMessage("Пароль должен содержать хотя бы одну заглавную букву");
         
-        RuleFor(user => user.PasswordConfirm)
-            .NotEmpty().WithMessage("Подтверждение пароля не может быть пустым")
-            .Equal(user => user.Password).WithMessage("Пароли не совпадают"); 
     }
     
 }

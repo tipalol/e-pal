@@ -1,5 +1,4 @@
 ﻿using Epal.Api.Controllers.Base;
-using Epal.Application.Features.Registration.Models;
 using Epal.Application.Features.Registration.Post;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
