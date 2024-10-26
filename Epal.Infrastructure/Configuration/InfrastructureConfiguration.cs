@@ -1,5 +1,7 @@
 using Epal.Application.Interfaces;
 using Epal.Infrastructure.Database;
+using Epal.Infrastructure.EmailServices;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +14,8 @@ public static class InfrastructureConfiguration
     {
         services.AddDbContext<IEpalDbContext, EpalDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")!));
-        
+        services.AddTransient<IEmailSender, EmailSender>();
+
         return services;
     }
 }

@@ -10,8 +10,8 @@ public class RegisterController(ISender sender) : RestController(sender)
     [HttpPost]
     public async Task Register(RegistrationRequest request)
         => await Sender.Send(request);
-    
+
     [HttpPost("confirm")]
-    public Task ConfirmEmail(object obj)
-        => Task.CompletedTask;
+    public async Task<bool> ConfirmEmail(int verificationCode)
+        => await Sender.Send(verificationCode);
 }

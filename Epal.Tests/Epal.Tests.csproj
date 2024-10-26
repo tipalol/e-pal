@@ -22,4 +22,8 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Epal.Infrastructure\Epal.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
