@@ -1,4 +1,5 @@
-﻿using Epal.Application.Interfaces;
+﻿using Epal.Application.Features.EMailConfirmation.Services;
+using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -9,7 +10,7 @@ namespace Epal.Application.Features.Registration;
 
 public record RegistrationRequest(string Email, string Password) : IRequest;
 
-internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService, IEmailSender emailSender, IMemoryCache cache) : IRequestHandler<RegistrationRequest>
+internal sealed class Handler(IEpalDbContext context, IVerificationService verificationService) : IRequestHandler<RegistrationRequest>
 {
     public async Task Handle(RegistrationRequest request, CancellationToken cancellationToken)
     {
@@ -22,10 +23,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         }
 
         // TODO внести в EMailConfirmationService
-        var verificationCode = CreateVerificationCode(request);
-        SaveCodeInCache(request, verificationCode);
-        SendVerificationCode(request, verificationCode);
-        Console.WriteLine(verificationCode);
+        verificationService.SendVerificationCode(request.Email); 
         //var passwordHash = passwordService.HashPassword(request.Password);
         //var user = new User(request.Email, passwordHash);
 
@@ -33,13 +31,6 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         //await context.SaveChangesAsync(cancellationToken);
     }
 
-    public int CreateVerificationCode(RegistrationRequest request) => Math.Abs(Guid.NewGuid().GetHashCode() % 100000);
-    private void SaveCodeInCache(RegistrationRequest request, int code)=>
-        cache.Set(request.Email, code, new DateTimeOffset(DateTime.UtcNow.AddHours(4)));
-    private async Task SendVerificationCode(RegistrationRequest request, int code)
-    {
-        string body = $"<div style=\"color: black;\">Сообщение от NPL. Ваш код подтверждения <div style=\"color: red;\"> <br>{code}</br> </div></div>";
-        await emailSender.SendEmailAsync(request.Email, "Confirmation Email", body);
-    }
+   
     
 }

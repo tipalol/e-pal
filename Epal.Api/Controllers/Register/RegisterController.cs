@@ -1,4 +1,5 @@
 ﻿using Epal.Api.Controllers.Base;
+using Epal.Application.Features.EMailConfirmation;
 using Epal.Application.Features.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,6 @@ public class RegisterController(ISender sender) : RestController(sender)
 
     [HttpPost("confirm")]
     // TODO сделать реквест добавить емал
-    public async Task<bool> ConfirmEmail(int verificationCode)
+    public async Task<bool> ConfirmEmail(EMailConfirmRequest verificationCode)
         => await Sender.Send(verificationCode);
 }

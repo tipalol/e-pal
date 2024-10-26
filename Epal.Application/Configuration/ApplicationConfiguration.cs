@@ -1,4 +1,5 @@
 using System.Reflection;
+using Epal.Application.Features.EMailConfirmation.Services;
 using Epal.Application.Interfaces;
 using Epal.Application.Services;
 using FluentValidation;
@@ -16,6 +17,7 @@ public static class ApplicationConfiguration
     {
         services.AddMediatR(b => b.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddScoped<IPasswordService, PasswordService>();
+        services.AddScoped<IVerificationService, VerificationService>();
         services.AddMemoryCache();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();

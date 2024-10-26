@@ -2,6 +2,7 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using MimeKit.Text;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace Epal.Infrastructure.EmailServices;
@@ -23,8 +24,8 @@ public class EmailSender (ILogger<EmailSender> _logger): IEmailSender
             message.Subject = Title;
 
             // Add the email body
-            // TODO HTTP
-            message.Body = new TextPart("plain")
+            // TODO HTML
+            message.Body = new TextPart(TextFormat.Html)
             {
                 Text = body
             };
