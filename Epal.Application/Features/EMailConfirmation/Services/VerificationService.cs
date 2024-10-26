@@ -7,7 +7,7 @@ namespace Epal.Application.Features.EMailConfirmation.Services;
 
 public class VerificationService(IMemoryCache cache, IEmailSender emailSender) : IVerificationService
 {
-    public async Task SendVerificationCode(string email)
+    public async Task SendVerificationCodeAsync(string email)
     {
         int verificationCode = CreateVerificationCode();
         SaveCodeInCache(email, verificationCode);

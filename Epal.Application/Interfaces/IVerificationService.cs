@@ -2,6 +2,6 @@
 
 public interface IVerificationService
 {
-     Task SendVerificationCode(string email);
+     Task SendVerificationCodeAsync(string email);
      bool Verify(string email, int verificationCode);
 }

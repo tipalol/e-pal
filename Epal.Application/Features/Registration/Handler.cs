@@ -10,7 +10,7 @@ namespace Epal.Application.Features.Registration;
 
 public record RegistrationRequest(string Email, string Password) : IRequest;
 
-internal sealed class Handler(IEpalDbContext context, IVerificationService verificationService) : IRequestHandler<RegistrationRequest>
+internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService, IVerificationService verificationService) : IRequestHandler<RegistrationRequest>
 {
     public async Task Handle(RegistrationRequest request, CancellationToken cancellationToken)
     {
@@ -22,13 +22,13 @@ internal sealed class Handler(IEpalDbContext context, IVerificationService verif
             throw new ArgumentException("Пользователь с таким Email уже существует");
         }
 
-        // TODO внести в EMailConfirmationService
-        verificationService.SendVerificationCode(request.Email); 
-        //var passwordHash = passwordService.HashPassword(request.Password);
-        //var user = new User(request.Email, passwordHash);
-
-        //await context.Users.AddAsync(user, cancellationToken);
-        //await context.SaveChangesAsync(cancellationToken);
+        await verificationService.SendVerificationCodeAsync(request.Email); 
+        var passwordHash = passwordService.HashPassword(request.Password);
+        var user = new User(request.Email, passwordHash);
+        
+        await context.Users.AddAsync(user, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+        
     }
 
    

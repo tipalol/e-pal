@@ -24,7 +24,6 @@ public class EmailSender (ILogger<EmailSender> _logger): IEmailSender
             message.Subject = Title;
 
             // Add the email body
-            // TODO HTML
             message.Body = new TextPart(TextFormat.Html)
             {
                 Text = body
