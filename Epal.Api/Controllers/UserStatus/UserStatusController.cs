@@ -8,6 +8,6 @@ namespace Epal.Api.Controllers.UserStatus;
 public class UserStatusController(ISender sender) : RestController(sender)
 {
     [HttpGet]
-    public async Task<Domain.Enums.UserStatus> Register(CheckUserRequest request)
+    public async Task<Domain.Enums.UserStatus> GetUserStatus(CheckUserRequest request)
         => await Sender.Send(request);
 }
