@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Epal.Application.Interfaces;
 using Epal.Application.Services;
 using FluentValidation;
@@ -20,7 +21,10 @@ public static class ApplicationConfiguration
         services.AddMemoryCache();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
-
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
         return services;
     }
 }

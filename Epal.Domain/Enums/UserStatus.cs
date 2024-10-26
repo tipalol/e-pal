@@ -1,14 +1,16 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace Epal.Domain.Enums;
 
 public enum UserStatus
 {
-    [Description("Создан")]
+    [JsonConverter(typeof(StringEnumConverter))]
     Created = 100,
-    [Description("Подтвержден")]
+    [JsonConverter(typeof(StringEnumConverter))]
     Confirmed = 101,
-    [Description("Забанен")]
+    [JsonConverter(typeof(StringEnumConverter))]
     Banned = 404
 }
