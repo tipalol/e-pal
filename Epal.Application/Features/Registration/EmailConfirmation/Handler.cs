@@ -1,12 +1,9 @@
-﻿using Epal.Application.Features.Registration;
-using Epal.Application.Interfaces;
+﻿using Epal.Application.Interfaces;
 using Epal.Domain.Enums;
 using MediatR;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
-namespace Epal.Application.Features.EMailConfirmation;
+namespace Epal.Application.Features.Registration.EmailConfirmation;
 
 public record EmailConfirmRequest(string Email, int VerificationCode) : IRequest<bool>;
 

@@ -8,7 +8,7 @@ namespace Epal.Application.Features.CheckExsistingUser;
 
 public record CheckUserRequest(string Email) : IRequest<StatusResponse>;
 
-internal sealed class Handler(IEpalDbContext context, IVerificationService verificationService) : IRequestHandler<CheckUserRequest, StatusResponse>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<CheckUserRequest, StatusResponse>
 {
     public async Task<StatusResponse> Handle(CheckUserRequest request, CancellationToken cancellationToken)
     {
@@ -16,8 +16,7 @@ internal sealed class Handler(IEpalDbContext context, IVerificationService verif
             .Where(x => x.Email == request.Email)
             .Select(x => new StatusResponse(true, x.Status))
             .SingleOrDefaultAsync(cancellationToken);
-        if (exists?.Status == UserStatus.Created)
-            verificationService.SendVerificationCodeAsync(request.Email);
+
         return exists ?? new StatusResponse(false);
     }
 }

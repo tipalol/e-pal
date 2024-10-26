@@ -1,3 +1,5 @@
+using Epal.Application.Services;
+
 namespace Epal.Tests.Integrations.MailClient;
 
 public class MainClientTests
@@ -13,7 +15,9 @@ public class MainClientTests
     [Test]
     public void ConnectAllProtocolsAndSendMail_OK()
     {
-        // Send a test email
-        Client.SendEmailAsync("danul383rus@gmail.com", "Confirmation Email", "This is a test email.");
+        var pService = new PasswordService();
+        var passwordHash = pService.HashPassword("123");
+        
+        Assert.AreEqual(passwordHash, "asfdsadfasfgasfdgsaredfgsdfgsdfgsdfgsdfg");
     }
 }

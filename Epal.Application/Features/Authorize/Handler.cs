@@ -26,8 +26,6 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
             throw new ArgumentException("Пользователь не найден");
         if (user.PasswordHash != passwordHash)
             throw new PasswordException("Неправильный пароль");
-        if (user.Status == UserStatus.Created)
-            throw new VerificationException("Неподтвержденная почта");
         if (user.Status == UserStatus.Banned)
             throw new FieldAccessException("ВЫ з0банены ^_^/ пакеда");
         
