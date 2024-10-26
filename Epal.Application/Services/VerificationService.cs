@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Epal.Application.Features.EMailConfirmation.Services;
+namespace Epal.Application.Services;
 
 public class VerificationService(IMemoryCache cache, IEmailSender emailSender) : IVerificationService
 {

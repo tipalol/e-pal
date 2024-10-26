@@ -1,5 +1,4 @@
 using System.Reflection;
-using Epal.Application.Features.EMailConfirmation.Services;
 using Epal.Application.Interfaces;
 using Epal.Application.Services;
 using FluentValidation;

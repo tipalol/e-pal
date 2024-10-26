@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\EMailConfirmation\Verefication\" />
+      <Folder Include="Features\EmailConfirmation\Services\" />
+      <Folder Include="Features\EmailConfirmation\Verefication\" />
     </ItemGroup>
 
 </Project>
