@@ -12,6 +12,6 @@ public class RegisterController(ISender sender) : RestController(sender)
         => await Sender.Send(request);
     
     [HttpPost("confirm")]
-    public async Task ConfirmEmail([FromQuery(Name = "code")] string code)
-        => throw new NotImplementedException();
+    public Task ConfirmEmail(object obj)
+        => Task.CompletedTask;
 }
