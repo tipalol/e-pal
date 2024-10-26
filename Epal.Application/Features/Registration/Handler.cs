@@ -19,7 +19,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
             throw new ArgumentException("Пользователь с таким Email уже существует");
         }
 
-        await verificationService.SendVerificationCodeAsync(request.Email); 
+        verificationService.SendVerificationCodeAsync(request.Email); 
         
         var passwordHash = passwordService.HashPassword(request.Password);
         var user = new User(request.Email, passwordHash);
