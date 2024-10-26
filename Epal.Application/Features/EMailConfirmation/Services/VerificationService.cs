@@ -19,7 +19,10 @@ public class VerificationService(IMemoryCache cache, IEmailSender emailSender) :
         if (cache.TryGetValue(email, out int cacheVerificationCode))
         {
             if (cacheVerificationCode == verificationCode)
+            {
+                cache.Remove(email);
                 return true;
+            }
         }
         return false;
     }
