@@ -1,10 +1,7 @@
-﻿using Epal.Application.Features.EMailConfirmation.Services;
-using Epal.Application.Interfaces;
+﻿using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Epal.Application.Features.Registration;
 
@@ -23,14 +20,11 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         }
 
         await verificationService.SendVerificationCodeAsync(request.Email); 
+        
         var passwordHash = passwordService.HashPassword(request.Password);
         var user = new User(request.Email, passwordHash);
         
         await context.Users.AddAsync(user, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-        
     }
-
-   
-    
 }

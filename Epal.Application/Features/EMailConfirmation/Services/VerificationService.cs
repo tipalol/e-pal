@@ -1,5 +1,4 @@
-﻿using Epal.Application.Features.Registration;
-using Epal.Application.Interfaces;
+﻿using Epal.Application.Interfaces;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -11,9 +10,8 @@ public class VerificationService(IMemoryCache cache, IEmailSender emailSender) :
     {
         int verificationCode = CreateVerificationCode();
         SaveCodeInCache(email, verificationCode);
-        string body =
-            $"<div style=\"color: black;\">Сообщение от NPL. Ваш код подтверждения <div style=\"color: red;\"> <br>{verificationCode}</br> </div></div>";
-        await emailSender.SendEmailAsync(email, "Confirmation Email", body);
+        
+        await emailSender.SendEmailAsync(email, "Confirmation Email", GetTemplatedMailBody(verificationCode));
     }
 
     public bool Verify(string email, int verificationCode)
@@ -26,8 +24,20 @@ public class VerificationService(IMemoryCache cache, IEmailSender emailSender) :
         return false;
     }
 
-    private int CreateVerificationCode() => Math.Abs(Guid.NewGuid().GetHashCode() % 100000);
+    private static int CreateVerificationCode() => Math.Abs(Guid.NewGuid().GetHashCode() % 100000);
 
     private void SaveCodeInCache(string email, int code) =>
         cache.Set(email, code, new DateTimeOffset(DateTime.UtcNow.AddHours(4)));
+    
+    private static string GetTemplatedMailBody(int verificationCode) => 
+        $"""
+         <div style="color: black;">
+             Сообщение от NPL. Ваш код подтверждения: 
+             <div style="color: red;"> 
+                 <br>
+                 {verificationCode}
+                 </br> 
+             </div>
+         </div>
+         """;
 }
