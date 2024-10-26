@@ -18,6 +18,7 @@ internal sealed class Handler(IVerificationService verificationService, IEpalDbC
         {
             var user = await context.Users.FirstAsync(x => x.Email == request.Email, cancellationToken);
             user.Status = UserStatus.Confirmed;
+            await context.SaveChangesAsync(cancellationToken);
             return true;
         }
         return false;
