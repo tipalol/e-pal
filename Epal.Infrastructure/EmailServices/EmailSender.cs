@@ -23,6 +23,7 @@ public class EmailSender (ILogger<EmailSender> _logger): IEmailSender
             message.Subject = Title;
 
             // Add the email body
+            // TODO HTTP
             message.Body = new TextPart("plain")
             {
                 Text = body

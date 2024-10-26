@@ -21,6 +21,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
             throw new ArgumentException("Пользователь с таким Email уже существует");
         }
 
+        // TODO внести в EMailConfirmationService
         var verificationCode = CreateVerificationCode(request);
         SaveCodeInCache(request, verificationCode);
         SendVerificationCode(request, verificationCode);

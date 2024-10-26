@@ -12,6 +12,7 @@ public class RegisterController(ISender sender) : RestController(sender)
         => await Sender.Send(request);
 
     [HttpPost("confirm")]
+    // TODO сделать реквест добавить емал
     public async Task<bool> ConfirmEmail(int verificationCode)
         => await Sender.Send(verificationCode);
 }
