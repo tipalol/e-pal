@@ -14,8 +14,8 @@ public class RegisterController(ISender sender) : RestController(sender)
         => await Sender.Send(request);
     
     [HttpPost("resend")]
-    public async Task ResendEmail(ResendEmailConfirmationRequest verificationRequest)
-        => await Sender.Send(verificationRequest);
+    public async Task ResendEmail(string email)
+        => await Sender.Send(new ResendEmailConfirmationRequest(email));
 
     [HttpPost("confirm")]
     public async Task<bool> ConfirmEmail(EmailConfirmRequest verificationRequest)
