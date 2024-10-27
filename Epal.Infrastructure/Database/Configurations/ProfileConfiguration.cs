@@ -1,4 +1,5 @@
 using Epal.Domain.Entities;
+using Epal.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
