@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <Folder Include="Features\Admin\" />
+      <Folder Include="Features\Profiles\Validations\" />
     </ItemGroup>
 
 </Project>

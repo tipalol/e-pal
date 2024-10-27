@@ -2,6 +2,7 @@
 using Epal.Application.Common;
 using Epal.Application.Features.Profiles.Get;
 using Epal.Application.Features.Profiles.Models;
+using Epal.Application.Features.Profiles.Post;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,4 +13,8 @@ public class ProfileController(ISender sender) : RestController(sender)
     [HttpGet("username")]
     public async Task<Result<ProfileResponse>> GetByUsername(string username)
         => await Sender.Send(new ProfileRequest(username));
+
+    [HttpPost]
+    public async Task<Result<ProfileResponse>> UpdateUsername(string username, string newUsername)
+        => await Sender.Send((new UpdateUsernameRequest(username, newUsername)));
 }
