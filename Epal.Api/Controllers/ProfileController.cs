@@ -19,7 +19,6 @@ public class ProfileController(ISender sender) : RestController(sender)
     [HttpPost, Authorize]
     public async Task<Result<ProfileResponse>> UpdateProfile([FromBody]ProfileModel model)
     {
-        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid)?.Value;
-        return await Sender.Send((new UpdateUsernameRequest(Guid.Parse(userId), model)));
+        return await Sender.Send((new UpdateUsernameRequest(model)));
     }
 }

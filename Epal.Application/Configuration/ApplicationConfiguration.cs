@@ -18,6 +18,7 @@ public static class ApplicationConfiguration
         services.AddMediatR(b => b.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IVerificationService, VerificationService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddMemoryCache();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
