@@ -18,7 +18,8 @@ namespace Epal.Application.Features.Profiles.Models;
         {
             Id = profile.Id,
             Email = profile.Email,
-            Balance = 0,
+            Balance = profile.Balance,
+            Username = profile.Username,
             UserStatus = profile.Status
         };
     }
