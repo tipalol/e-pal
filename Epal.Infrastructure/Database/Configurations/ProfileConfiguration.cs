@@ -9,5 +9,7 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
     public void Configure(EntityTypeBuilder<Profile> builder)
     {
         builder.HasMany(x => x.Followers);
+
+        builder.HasIndex(x => x.Username);
     }
 }
