@@ -9,24 +9,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Epal.Api.Controllers.Admin;
 
+/// <inheritdoc />
 public class UsersController(ISender sender) : RestController(sender)
 {
     /// <summary>
-    /// Получение пользователей
+    /// Получение всех пользователей
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Domain.Entities.Profile>> GetUsers()
+    public async Task<IEnumerable<Profile>> GetUsers()
         => await Sender.Send(new GetUsersRequest());
     
+    /// <summary>
+    /// Получение пользователя по айди
+    /// </summary>
     [HttpGet("{id:guid}")]
-    public async Task<Domain.Entities.Profile> GetUser([FromRoute(Name = "id")] Guid id)
+    public async Task<Profile> GetUser([FromRoute(Name = "id")] Guid id)
         => await Sender.Send(new GetUserRequest(id));
     
+    /// <summary>
+    /// Добавление нового пользователя
+    /// </summary>
     [HttpPost]
-    public async Task<Domain.Entities.Profile> AddUser(CreateUserRequest request)
+    public async Task<Profile> AddUser(CreateUserRequest request)
         => await Sender.Send(request);
     
+    /// <summary>
+    /// Удаление пользователя
+    /// </summary>
     [HttpDelete("{id:guid}")]
     public async Task DeleteUser([FromRoute(Name = "id")] Guid id)
         => await Sender.Send(new RemoveUserRequest(id));
