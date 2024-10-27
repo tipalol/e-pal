@@ -7,7 +7,6 @@ namespace Epal.Application.Features.Profiles.Models;
 {
     public required Guid Id { get; set; }
     public required string Email { get; set; }
-    public required string ProfileId { get; set; }
     public string? Username { get; set; }
     public required decimal Balance { get; set; }
     public required UserStatus UserStatus { get; set; }
@@ -15,6 +14,13 @@ namespace Epal.Application.Features.Profiles.Models;
 
     public static ProfileResponse FromProfile(Profile profile)
     {
-        return null;
+        return new ProfileResponse
+        {
+            FollowersCount = profile.Followers.Count(),
+            Id = profile.Id,
+            Email = profile.Email,
+            Balance = 0,
+            UserStatus = profile.Status
+        };
     }
 }
