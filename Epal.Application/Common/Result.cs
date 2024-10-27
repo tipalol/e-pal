@@ -1,9 +1,12 @@
+using System.Text.Json.Serialization;
+
 namespace Epal.Application.Common;
 
 public class Result
 {
     public bool Success { get; set; }
     
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Error { get; set; }
 
     public static Result Ok() => new Result { Success = true };
@@ -14,8 +17,10 @@ public class Result<T>
 {
     public bool Success { get; set; }
     
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public T? Data { get; set; }
     
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Error { get; set; }
 
     public static Result<T> Ok(T data) => new Result<T> { Success = true, Data = data };
