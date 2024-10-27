@@ -16,15 +16,15 @@ public class UsersController(ISender sender) : RestController(sender)
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Domain.Entities.Profile>> GetUsers()
+    public async Task<IEnumerable<Profile>> GetUsers()
         => await Sender.Send(new GetUsersRequest());
     
     [HttpGet("{id:guid}")]
-    public async Task<Domain.Entities.Profile> GetUser([FromRoute(Name = "id")] Guid id)
+    public async Task<Profile> GetUser([FromRoute(Name = "id")] Guid id)
         => await Sender.Send(new GetUserRequest(id));
     
     [HttpPost]
-    public async Task<Domain.Entities.Profile> AddUser(CreateUserRequest request)
+    public async Task<Profile> AddUser(CreateUserRequest request)
         => await Sender.Send(request);
     
     [HttpDelete("{id:guid}")]
