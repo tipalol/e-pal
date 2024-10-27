@@ -20,12 +20,10 @@ public static class ApplicationConfiguration
         services.AddScoped<IVerificationService, VerificationService>();
         services.AddScoped<IUserService, UserService>();
         services.AddMemoryCache();
+        
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
-        services.AddControllers().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        });
+        
         return services;
     }
 }
