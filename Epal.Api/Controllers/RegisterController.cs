@@ -5,7 +5,7 @@ using Epal.Application.Features.Registration.ResendEmailConfirmation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Epal.Api.Controllers.Register;
+namespace Epal.Api.Controllers;
 
 public class RegisterController(ISender sender) : RestController(sender)
 {

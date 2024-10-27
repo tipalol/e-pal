@@ -4,7 +4,7 @@ using Epal.Application.Features.Status.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Epal.Api.Controllers.UserStatus;
+namespace Epal.Api.Controllers;
 
 public class UserStatusController(ISender sender) : RestController(sender)
 {
