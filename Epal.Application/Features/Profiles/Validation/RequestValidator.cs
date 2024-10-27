@@ -1,7 +1,7 @@
 ﻿using Epal.Application.Features.Profiles.Models;
 using FluentValidation;
 
-namespace Epal.Application.Features.Profiles.Validations;
+namespace Epal.Application.Features.Profiles.Validation;
 
 public class RequestValidator : AbstractValidator<ProfileModel>
 {

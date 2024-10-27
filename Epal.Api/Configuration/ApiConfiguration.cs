@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Epal.Application.Features.Authorize.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +24,11 @@ public static class ApiConfiguration
 
         services.ConfigureAuthentication();
         
-        services.AddControllers();
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
+        
         services.AddEndpointsApiExplorer();
         services.ConfigureSwagger();
         
@@ -55,7 +60,7 @@ public static class ApiConfiguration
                             Id="Bearer"
                         }
                     },
-                    new string[]{}
+                    []
                 }
             });
     

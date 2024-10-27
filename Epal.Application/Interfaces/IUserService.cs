@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
+using Epal.Application.Common.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Epal.Application.Interfaces;
 
 public interface IUserService
 {
-    public ClaimsPrincipal? CurrentUser { get;}
-    public IEnumerable<Claim>? GetUserClaims();
-    public Guid GetUserId();
+    public AuthenticatedUser AuthenticatedUser { get; }
 }
