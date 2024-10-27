@@ -3,7 +3,7 @@ using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Users.Get;
+namespace Epal.Application.Features.Admin.Users.Get;
 
 public record GetUserRequest(Guid Id) : IRequest<User>;
 

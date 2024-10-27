@@ -1,7 +1,10 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Epal.Application.Interfaces;
 using Epal.Application.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
@@ -14,10 +17,14 @@ public static class ApplicationConfiguration
     {
         services.AddMediatR(b => b.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddScoped<IPasswordService, PasswordService>();
-        
+        services.AddScoped<IVerificationService, VerificationService>();
+        services.AddMemoryCache();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
-
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
         return services;
     }
 }

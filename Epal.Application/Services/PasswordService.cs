@@ -9,6 +9,7 @@ public class PasswordService : IPasswordService
     {
         var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
         var hashBytes = SHA256.HashData(passwordBytes);
+        
         return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 }
