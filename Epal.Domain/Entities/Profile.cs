@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Epal.Domain.Entities.Base;
 using Epal.Domain.Enums;
 
+
 namespace Epal.Domain.Entities;
 
 public class Profile : DateTrackedEntity
