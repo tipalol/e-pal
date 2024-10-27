@@ -15,7 +15,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
     public async Task<string> Handle(AuthorizeRequest request, CancellationToken cancellationToken)
     {
         var passwordHash = passwordService.HashPassword(request.Password);
-        User? user;
+        Domain.Entities.Profile? user;
         
         if (request.Login.Contains('@'))
             user = await context.Users.FirstOrDefaultAsync(x => x.Email == request.Login, cancellationToken);

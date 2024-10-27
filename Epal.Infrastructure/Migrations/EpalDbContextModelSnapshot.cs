@@ -22,7 +22,7 @@ namespace Epal.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Epal.Domain.Entities.User", b =>
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,6 +52,8 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Users");
                 });

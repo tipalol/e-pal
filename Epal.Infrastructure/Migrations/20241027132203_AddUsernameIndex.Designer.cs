@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    [Migration("20241025154400_renameLock")]
-    partial class renameLock
+    [Migration("20241027132203_AddUsernameIndex")]
+    partial class AddUsernameIndex
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Epal.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Epal.Domain.Entities.User", b =>
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,26 +41,41 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<DateTimeOffset?>("Updated")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
+                    b.Property<string>("Username")
                         .HasColumnType("text");
-
-                    b.Property<bool>("isBanned")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProfileId");
+
+                    b.HasIndex("Username");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
+                {
+                    b.HasOne("Epal.Domain.Entities.Profile", null)
+                        .WithMany("Followers")
+                        .HasForeignKey("ProfileId");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
+                {
+                    b.Navigation("Followers");
                 });
 #pragma warning restore 612, 618
         }

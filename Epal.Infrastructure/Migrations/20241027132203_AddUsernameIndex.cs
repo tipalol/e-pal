@@ -5,24 +5,23 @@
 namespace Epal.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class renameLock : Migration
+    public partial class AddUsernameIndex : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Lock",
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
                 table: "Users",
-                newName: "isBanned");
+                column: "Username");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "isBanned",
-                table: "Users",
-                newName: "Lock");
+            migrationBuilder.DropIndex(
+                name: "IX_Users_Username",
+                table: "Users");
         }
     }
 }

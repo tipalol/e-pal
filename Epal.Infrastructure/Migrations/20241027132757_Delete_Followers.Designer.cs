@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    [Migration("20241025161049_ChangeUser")]
-    partial class ChangeUser
+    [Migration("20241027132757_Delete_Followers")]
+    partial class Delete_Followers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Epal.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Epal.Domain.Entities.User", b =>
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,10 +52,11 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Users");
                 });
