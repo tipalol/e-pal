@@ -16,7 +16,6 @@ namespace Epal.Application.Features.Profiles.Models;
     {
         return new ProfileResponse
         {
-            FollowersCount = profile.Followers.Count(),
             Id = profile.Id,
             Email = profile.Email,
             Balance = 0,

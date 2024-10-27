@@ -14,10 +14,5 @@ public class UserStatusController(ISender sender) : RestController(sender)
     [HttpGet]
     public async Task<StatusResponse> Get(string email)
         => await Sender.Send(new StatusUserRequest(email));
-
-    public void asdasdsad()
-    {
-        var profile = new Profile();
-    }
     
 }
