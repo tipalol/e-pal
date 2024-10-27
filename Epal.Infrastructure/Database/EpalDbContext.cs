@@ -7,7 +7,7 @@ namespace Epal.Infrastructure.Database;
 
 public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(options), IEpalDbContext
 {
-    public DbSet<Profile> Users { get; set; }
+    public DbSet<Profile> Users { get; private  set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
