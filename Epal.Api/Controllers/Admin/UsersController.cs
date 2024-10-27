@@ -11,6 +11,10 @@ namespace Epal.Api.Controllers.Admin;
 
 public class UsersController(ISender sender) : RestController(sender)
 {
+    /// <summary>
+    /// Получение пользователей
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IEnumerable<User>> GetUsers()
         => await Sender.Send(new GetUsersRequest());

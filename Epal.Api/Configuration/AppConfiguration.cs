@@ -14,14 +14,12 @@ public static class AppConfiguration
         }
 
         app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-        
         app.UseRouting();
-
         app.UseCors("AllowAll"); 
-
         app.MapControllers();
+        
+        app.UseAuthentication();
+        app.UseAuthorization();
         
         MigrateDbContext(app);
         
