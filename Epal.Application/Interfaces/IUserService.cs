@@ -7,4 +7,5 @@ public interface IUserService
 {
     public ClaimsPrincipal? CurrentUser { get;}
     public IEnumerable<Claim>? GetUserClaims();
+    public Guid GetUserId();
 }

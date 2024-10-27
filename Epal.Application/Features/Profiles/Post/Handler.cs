@@ -14,10 +14,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 {
     public async Task<Result<ProfileResponse>> Handle(UpdateUsernameRequest updateProfileRequest, CancellationToken cancellationToken)
     {
-        var userId = userService.CurrentUser?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid)?.Value;
-        if (userId is null)
-            throw new Exception("Ошибка аутентификации пользователя");
-        var userGuid = Guid.Parse(userId);
+        var userGuid = userService.GetUserId();
         var profile = await context.Users.SingleOrDefaultAsync(x => x.Id == userGuid, cancellationToken);
         if (profile is null) return Result<ProfileResponse>.Fail("Profile not found");
         bool newUsernameExisted =

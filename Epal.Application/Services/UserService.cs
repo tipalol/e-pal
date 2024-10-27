@@ -11,5 +11,13 @@ public class UserService(IHttpContextAccessor contextAccessor) : IUserService
     
     public IEnumerable<Claim>? GetUserClaims()
         => CurrentUser?.Claims.AsEnumerable();
-    
+
+    public Guid GetUserId()
+    {
+        var userId = CurrentUser?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid)?.Value;
+        if (userId is null)
+            throw new Exception("Ошибка аутентификации пользователя");
+        return Guid.Parse(userId);
+    }
+
 }
