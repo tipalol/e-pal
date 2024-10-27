@@ -1,5 +1,5 @@
 ﻿using System.Security;
-using Epal.Application.Features.Token;
+using Epal.Application.Features.Authorize.Token;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using Epal.Domain.Enums;

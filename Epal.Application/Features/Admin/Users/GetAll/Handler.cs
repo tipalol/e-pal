@@ -3,7 +3,7 @@ using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Users.GetAll;
+namespace Epal.Application.Features.Admin.Users.GetAll;
 
 public record GetUsersRequest : IRequest<IEnumerable<User>>;
 

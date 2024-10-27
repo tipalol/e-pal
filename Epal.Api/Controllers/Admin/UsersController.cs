@@ -1,8 +1,8 @@
 using Epal.Api.Controllers.Base;
-using Epal.Application.Features.Users.Add;
-using Epal.Application.Features.Users.Get;
-using Epal.Application.Features.Users.GetAll;
-using Epal.Application.Features.Users.Remove;
+using Epal.Application.Features.Admin.Users.Add;
+using Epal.Application.Features.Admin.Users.Get;
+using Epal.Application.Features.Admin.Users.GetAll;
+using Epal.Application.Features.Admin.Users.Remove;
 using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

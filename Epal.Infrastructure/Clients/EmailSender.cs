@@ -5,7 +5,7 @@ using MimeKit;
 using MimeKit.Text;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
-namespace Epal.Infrastructure.EmailServices;
+namespace Epal.Infrastructure.Clients;
 
 public class EmailSender (ILogger<EmailSender> _logger): IEmailSender
 {

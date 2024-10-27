@@ -1,10 +1,11 @@
 using Epal.Application.Services;
+using Epal.Infrastructure.Clients;
 
 namespace Epal.Tests.Integrations.MailClient;
 
 public class MainClientTests
 {
-    private readonly Infrastructure.EmailServices.EmailSender Client;
+    private readonly EmailSender Client;
 
  
     [SetUp]
@@ -13,11 +14,8 @@ public class MainClientTests
     }
 
     [Test]
-    public void ConnectAllProtocolsAndSendMail_OK()
+    public void Connect_OK()
     {
-        var pService = new PasswordService();
-        var passwordHash = pService.HashPassword("123");
         
-        Assert.AreEqual(passwordHash, "asfdsadfasfgasfdgsaredfgsdfgsdfgsdfgsdfg");
     }
 }

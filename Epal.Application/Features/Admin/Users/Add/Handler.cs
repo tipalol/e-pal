@@ -1,10 +1,9 @@
 using System.ComponentModel;
 using Epal.Application.Interfaces;
-using Epal.Application.Services;
 using Epal.Domain.Entities;
 using MediatR;
 
-namespace Epal.Application.Features.Users.Add;
+namespace Epal.Application.Features.Admin.Users.Add;
 
 public record CreateUserRequest(string Username, string Email, [PasswordPropertyText] string Password) : IRequest<User>;
 

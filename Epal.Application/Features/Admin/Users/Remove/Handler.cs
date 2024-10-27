@@ -1,8 +1,7 @@
-using System.Xml.Schema;
 using Epal.Application.Interfaces;
 using MediatR;
 
-namespace Epal.Application.Features.Users.Remove;
+namespace Epal.Application.Features.Admin.Users.Remove;
 
 public record RemoveUserRequest(Guid Id) : IRequest;
 
