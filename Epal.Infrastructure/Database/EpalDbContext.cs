@@ -7,11 +7,12 @@ namespace Epal.Infrastructure.Database;
 
 public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(options), IEpalDbContext
 {
-    public DbSet<User> Users { get; set; }
+    public DbSet<Profile> Users { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Profile>().HasMany(x => x.Follower);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
