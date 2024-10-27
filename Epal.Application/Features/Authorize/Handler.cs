@@ -16,7 +16,8 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
     {
         var passwordHash = passwordService.HashPassword(request.Password);
         Domain.Entities.Profile? user;
-        
+        if (request.Login is null)
+            throw new ArgumentException("Empty argument exception");
         if (request.Login.Contains('@'))
             user = await context.Users.FirstOrDefaultAsync(x => x.Email == request.Login, cancellationToken);
         else
