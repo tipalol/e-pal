@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Epal.Api.Controllers.Base;
+﻿using Epal.Api.Controllers.Base;
 using Epal.Application.Common;
 using Epal.Application.Features.Profiles.Get;
 using Epal.Application.Features.Profiles.Models;
@@ -17,8 +16,8 @@ public class ProfileController(ISender sender) : RestController(sender)
         => await Sender.Send(new ProfileRequest(username));
 
     [HttpPost, Authorize]
-    public async Task<Result<ProfileResponse>> UpdateProfile([FromBody]ProfileModel model)
+    public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel model)
     {
-        return await Sender.Send((new UpdateProfileRequest(model)));
+        return await Sender.Send(new UpdateProfileRequest(model));
     }
 }

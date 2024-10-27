@@ -5,7 +5,6 @@ namespace Epal.Application.Features.Profiles.Validation;
 
 public class RequestValidator : AbstractValidator<ProfileModel>
 {
-
     public RequestValidator()
     {
         RuleFor(x => x.Username)
@@ -18,5 +17,4 @@ public class RequestValidator : AbstractValidator<ProfileModel>
             .Matches(@"^[a-zA-Z0-9_.-]+$")
                 .WithMessage("Имя пользователя может содержать только буквы, цифры, дефисы, точки и нижнее подчеркивание.");
     }
-    
 }
