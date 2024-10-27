@@ -13,5 +13,6 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
             .HasConversion(status => status.ToString(), s => Enum.Parse<UserStatus>(s));
         
         builder.HasIndex(x => x.Username);
+        builder.HasIndex(x => x.ProfileType);
     }
 }

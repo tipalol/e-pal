@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Epal.Domain.Entities.Base;
 using Epal.Domain.Enums;
 
@@ -21,4 +20,5 @@ public class Profile : DateTrackedEntity
     public string PasswordHash { get; set; }
     public decimal Balance { get; set; }
     public UserStatus Status { get; set; }
+    public ProfileType ProfileType { get; set; }
 }

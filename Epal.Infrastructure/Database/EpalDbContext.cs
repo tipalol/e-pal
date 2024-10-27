@@ -13,9 +13,5 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        modelBuilder.Entity<Profile>()
-            .HasDiscriminator<string>("ProfileType")
-            .HasValue<Profile>("RegularProfile") 
-            .HasValue<EpalProfile>("EpalProfile"); 
     }
 }
