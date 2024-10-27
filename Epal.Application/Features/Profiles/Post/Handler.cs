@@ -1,7 +1,7 @@
 ﻿using Epal.Application.Interfaces;
 using MediatR;
 
-namespace Epal.Application.Features.Profile.Post;
+namespace Epal.Application.Features.Profiles.Post;
 
 public record __Name(string Email, int VerificationCode) : IRequest<bool>;
 

@@ -1,6 +1,9 @@
-﻿using Epal.Api.Controllers.Base;
+﻿
+
+using Epal.Api.Controllers.Base;
 using Epal.Application.Features.Status;
 using Epal.Application.Features.Status.Models;
+using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,4 +14,10 @@ public class UserStatusController(ISender sender) : RestController(sender)
     [HttpGet]
     public async Task<StatusResponse> Get(string email)
         => await Sender.Send(new StatusUserRequest(email));
+
+    public void asdasdsad()
+    {
+        var profile = new Profile();
+    }
+    
 }

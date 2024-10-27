@@ -14,18 +14,12 @@ public class Profile : DateTrackedEntity
         Email = email;
         PasswordHash = passwordHash;
         Status = UserStatus.Created;
-        Follower = new List<Profile>();
+        Followers = new List<Profile>();
     }
     public string Email { get; set; }
-    public string? ProfileId { get; set; }
-    [NotMapped]
-    public string? Username
-    {
-        get => ProfileId;
-        set => ProfileId = value;
-    }
+    public string? Username { get; set; }
     public string PasswordHash { get; set; }
     public decimal Balance { get; set; }
     public UserStatus Status { get; set; }
-    public ICollection<Profile> Follower { get; set; }
+    public ICollection<Profile> Followers { get; set; }
 }
