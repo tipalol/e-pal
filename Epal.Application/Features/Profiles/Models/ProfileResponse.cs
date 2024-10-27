@@ -10,7 +10,6 @@ namespace Epal.Application.Features.Profiles.Models;
     public string? Username { get; set; }
     public required decimal Balance { get; set; }
     public required UserStatus UserStatus { get; set; }
-    public int FollowersCount { get; set; }
 
     public static ProfileResponse FromProfile(Profile profile)
     {
