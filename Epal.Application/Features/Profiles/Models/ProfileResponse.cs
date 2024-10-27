@@ -15,9 +15,6 @@ namespace Epal.Application.Features.Profiles.Models;
 
     public static ProfileResponse FromProfile(Profile profile)
     {
-        return new ProfileResponse
-        {
-            FollowersCount = profile.Followers.Count()
-        };
+        return null;
     }
 }

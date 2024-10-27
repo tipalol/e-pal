@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    [Migration("20241025161049_ChangeUser")]
-    partial class ChangeUser
+    [Migration("20241027131945_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Epal.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Epal.Domain.Entities.User", b =>
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,6 +45,9 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ProfileId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -52,12 +55,25 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProfileId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
+                {
+                    b.HasOne("Epal.Domain.Entities.Profile", null)
+                        .WithMany("Followers")
+                        .HasForeignKey("ProfileId");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
+                {
+                    b.Navigation("Followers");
                 });
 #pragma warning restore 612, 618
         }

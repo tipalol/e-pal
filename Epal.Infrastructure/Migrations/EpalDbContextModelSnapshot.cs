@@ -42,10 +42,7 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ProfileId")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("ProfileId1")
+                    b.Property<Guid?>("ProfileId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -54,9 +51,12 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("Updated")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileId1");
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Users");
                 });
@@ -64,13 +64,13 @@ namespace Epal.Infrastructure.Migrations
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
                     b.HasOne("Epal.Domain.Entities.Profile", null)
-                        .WithMany("Follower")
-                        .HasForeignKey("ProfileId1");
+                        .WithMany("Followers")
+                        .HasForeignKey("ProfileId");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
-                    b.Navigation("Follower");
+                    b.Navigation("Followers");
                 });
 #pragma warning restore 612, 618
         }
