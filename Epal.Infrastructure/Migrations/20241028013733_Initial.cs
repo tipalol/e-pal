@@ -12,18 +12,17 @@ namespace Epal.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Services",
+                name: "ServiceTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    Avatar = table.Column<string>(type: "text", nullable: false),
-                    Icon = table.Column<string>(type: "text", nullable: false)
+                    Avatar = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.Id);
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,41 +45,44 @@ namespace Epal.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileServices",
+                name: "Services",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProfileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ServiceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Avatar = table.Column<string>(type: "text", nullable: false),
+                    Icon = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    ProfileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ServiceTypeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileServices", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProfileServices_Services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Services",
+                        name: "FK_Services_ServiceTypes_ServiceTypeId",
+                        column: x => x.ServiceTypeId,
+                        principalTable: "ServiceTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProfileServices_Users_ProfileId",
+                        name: "FK_Services_Users_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfileServices_ProfileId",
-                table: "ProfileServices",
+                name: "IX_Services_ProfileId",
+                table: "Services",
                 column: "ProfileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfileServices_ServiceId",
-                table: "ProfileServices",
-                column: "ServiceId");
+                name: "IX_Services_ServiceTypeId",
+                table: "Services",
+                column: "ServiceTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_ProfileType",
@@ -97,10 +99,10 @@ namespace Epal.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProfileServices");
+                name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "ServiceTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");

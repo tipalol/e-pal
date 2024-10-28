@@ -1,4 +1,4 @@
-﻿namespace Epal.Application.Features.Activity.Models;
+﻿namespace Epal.Application.Features.Services.Models;
 
 public class ActivityModel
 {
@@ -8,7 +8,7 @@ public class ActivityModel
     public string Description { get; set; }
     public string Avatar { get; set; }
     public string Icon { get; set; }
-    
+
     public ActivityModel()
     {
     }

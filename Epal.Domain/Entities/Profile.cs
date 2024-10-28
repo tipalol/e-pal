@@ -1,5 +1,4 @@
 using Epal.Domain.Entities.Base;
-using Epal.Domain.Entities.ManyToMany;
 using Epal.Domain.Enums;
 
 namespace Epal.Domain.Entities;
@@ -13,7 +12,7 @@ public class Profile : DateTrackedEntity
     public UserStatus Status { get; set; } = UserStatus.Created;
     public ProfileType ProfileType { get; set; } = ProfileType.User;
 
-    public ICollection<ProfileServices> Services { get; set; } = [];
+    public ICollection<Service> Services { get; set; } = [];
 
     public static Profile Create(string email, string passwordHash)
     {

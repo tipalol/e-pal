@@ -2,7 +2,6 @@ using System.Reflection;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using Epal.Domain.Entities.Base;
-using Epal.Domain.Entities.ManyToMany;
 using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Infrastructure.Database;
@@ -12,7 +11,7 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
     public DbSet<Profile> Users { get; private  set; }
     public DbSet<Service> Services { get; private  set;}
 
-    public DbSet<ProfileServices> ProfileServices { get; private set; }
+    public DbSet<ServiceType> ServiceTypes { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

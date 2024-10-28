@@ -1,10 +1,10 @@
 ﻿using Epal.Application.Common;
-using Epal.Application.Features.Activity.Models;
+using Epal.Application.Features.Services.Models;
 using Epal.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Activity.GetAll;
+namespace Epal.Application.Features.Services.GetAll;
 
 public record GetAllActiviesRequest() : IRequest<Result<IEnumerable<ActivityModel>>>;
 

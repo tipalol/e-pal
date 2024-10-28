@@ -1,10 +1,10 @@
 ﻿using Epal.Application.Common;
-using Epal.Application.Features.Activity.Models;
+using Epal.Application.Features.Services.Models;
 using Epal.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Activity.Get.MyActivies;
+namespace Epal.Application.Features.Services.Get.My;
 
 
 public record MyActivityRequest() : IRequest<Result<IEnumerable<ActivityModel>>>;
@@ -15,7 +15,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
     {
         var Id = userService.AuthenticatedUser.Id;
         // ToDO напиши запрос мне лень думать, тут надо на ActivityInProfle смотреть
-        var activities = await context.Activities
+        var activities = await context.Services
             .Where(x => x.Id == Id)
             .Select(x => new ActivityModel(x))
             .ToListAsync(cancellationToken);

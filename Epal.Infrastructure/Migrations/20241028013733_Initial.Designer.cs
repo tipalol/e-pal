@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    [Migration("20241028012029_Initial")]
+    [Migration("20241028013733_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -67,33 +67,6 @@ namespace Epal.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Epal.Domain.Entities.ProfileServices", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
-
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ServiceId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("ProfileServices");
-                });
-
             modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
                 {
                     b.Property<Guid>("Id")
@@ -116,31 +89,72 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ServiceTypeId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("Epal.Domain.Entities.ProfileServices", b =>
+            modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceTypes");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
                 {
                     b.HasOne("Epal.Domain.Entities.Profile", "Profile")
                         .WithMany("Services")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Epal.Domain.Entities.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Epal.Domain.Entities.ServiceType", "ServiceType")
+                        .WithMany("Services")
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Profile");
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
+                {
+                    b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>
                 {
                     b.Navigation("Services");
                 });

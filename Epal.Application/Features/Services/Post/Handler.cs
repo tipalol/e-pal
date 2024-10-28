@@ -1,12 +1,9 @@
 ﻿using Epal.Application.Common;
-using Epal.Application.Features.Profiles.Models;
-using Epal.Application.Features.Profiles.Post;
 using Epal.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto;
 
-namespace Epal.Application.Features.Activity.Post;
+namespace Epal.Application.Features.Services.Post;
 
 public record CreateActivityRequest(string Name, string Description, string Avatar, string Icon) : IRequest<Result>;
 

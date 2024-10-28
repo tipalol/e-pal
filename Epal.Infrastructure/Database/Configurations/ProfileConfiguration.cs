@@ -17,7 +17,6 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
 
         builder.HasMany(x => x.Services)
             .WithOne(x => x.Profile)
-            .HasForeignKey(x => x.ProfileId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(x => x.ProfileId);
     }
 }
