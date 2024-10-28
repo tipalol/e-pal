@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Catalog.ServiceTypes.Get;
 
-public record ServiceTypesCatalogRequest(int Take = 5) : IRequest<IEnumerable<ServiceTypeCatalogView>>;
+public record ServiceTypesCatalogRequest(int Take = 6) : IRequest<IEnumerable<ServiceTypeCatalogView>>;
 
 public class Handler(IEpalDbContext context) : IRequestHandler<ServiceTypesCatalogRequest, IEnumerable<ServiceTypeCatalogView>>
 {
