@@ -53,11 +53,11 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             Avatar = serviceDto.Avatar,
             ServiceTypeId = serviceType.Id,
             ProfileId = profile.Id,
-            Price = serviceDto.Price
+            Price = serviceDto.Price,
+            Icon = ""
         };
 
-        profile.Services.Add(service);
-
+        await context.Services.AddAsync(service, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
         return Result.Ok();
