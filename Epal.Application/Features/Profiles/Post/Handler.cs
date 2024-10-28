@@ -1,6 +1,7 @@
 ﻿using Epal.Application.Common;
 using Epal.Application.Features.Profiles.Models;
 using Epal.Application.Interfaces;
+using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +22,17 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         var newUsernameExisted = await context.Users
             .AnyAsync(x => x.Username == updateProfileRequest.ProfileModel.Username, cancellationToken);
         
-        if (newUsernameExisted)
+        if (newUsernameExisted && userService.AuthenticatedUser.Username != updateProfileRequest.ProfileModel.Username)
             return Result<ProfileResponse>.Fail("Username is not available");
         
         profile.Username = updateProfileRequest.ProfileModel.Username;
-        
+        if (string.IsNullOrEmpty(profile.Avatar) || profile.Avatar == StaticValues.DefaultAvatarByGender(profile.Gender)) //Если аватар не меняли
+        {
+            profile.Avatar = StaticValues.DefaultAvatarByGender(updateProfileRequest.ProfileModel.Gender ?? Gender.Unselected);
+        }
+        profile.Gender = updateProfileRequest.ProfileModel.Gender ?? Gender.Unselected;
+        //
+        profile.Languages = "";
         await context.SaveChangesAsync(cancellationToken);
         
         return Result<ProfileResponse>.Ok(ProfileResponse.FromProfile(profile));

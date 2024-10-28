@@ -27,14 +27,17 @@
 
     <ItemGroup>
       <Compile Remove="Features\Activity\Get\MyActivies\**" />
+      <Compile Remove="Features\Registration\Services\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="Features\Activity\Get\MyActivies\**" />
+      <EmbeddedResource Remove="Features\Registration\Services\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Features\Activity\Get\MyActivies\**" />
+      <None Remove="Features\Registration\Services\**" />
     </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using Epal.Application.Features.Profiles.Get;
 using Epal.Application.Features.Profiles.Get.MyProfile;
 using Epal.Application.Features.Profiles.Models;
 using Epal.Application.Features.Profiles.Post;
+using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,6 @@ public class ProfileController(ISender sender) : RestController(sender)
         => await Sender.Send(new ProfileRequest(username));
 
     [HttpPost, Authorize]
-    public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel model)
-        => await Sender.Send(new UpdateProfileRequest(model));
+    public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel profileModel)
+        => await Sender.Send(new UpdateProfileRequest(profileModel));
 }
