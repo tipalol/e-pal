@@ -17,12 +17,12 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         try
         {
             Guid newActivityId = Guid.NewGuid();
-            while (await context.Activities.AnyAsync(x=>x.Id == newActivityId, cancellationToken))
+            while (await context.Services.AnyAsync(x=>x.Id == newActivityId, cancellationToken))
             {
                 newActivityId = Guid.NewGuid();
             }
 
-            await context.Activities.AddAsync(new Domain.Entities.Activity()
+            await context.Services.AddAsync(new Domain.Entities.Service()
             {
                 Avatar = request.Avatar,
                 Description = request.Description,

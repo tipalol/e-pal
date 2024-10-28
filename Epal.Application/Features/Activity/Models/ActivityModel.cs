@@ -12,12 +12,12 @@ public class ActivityModel
     public ActivityModel()
     {
     }
-    public ActivityModel(Domain.Entities.Activity activity)
+    public ActivityModel(Domain.Entities.Service service)
     {
-        Id = activity.Id;
-        Name = activity.Name;
-        Description = activity.Description;
-        Avatar = activity.Avatar;
-        Icon = activity.Icon;
+        Id = service.Id;
+        Name = service.Name;
+        Description = service.Description;
+        Avatar = service.Avatar;
+        Icon = service.Icon;
     }
 }

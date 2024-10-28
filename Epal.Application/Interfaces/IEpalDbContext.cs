@@ -1,5 +1,6 @@
 using Epal.Domain.Entities;
 using Epal.Domain.Entities.Base;
+using Epal.Domain.Entities.ManyToMany;
 using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Interfaces;
@@ -7,8 +8,8 @@ namespace Epal.Application.Interfaces;
 public interface IEpalDbContext
 {
     public DbSet<Profile> Users { get; }
-    public DbSet<Activity> Activities { get; }
-    public DbSet<ActivityInProfile> ActivitiesInProfiles { get; }
-    
+    public DbSet<Service> Services { get; }
+    public DbSet<ProfileServices> ProfileServices { get; }
+
     public Task<int> SaveChangesAsync(CancellationToken token);
 }

@@ -12,8 +12,8 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetAllAc
 {
     public async Task<Result<IEnumerable<ActivityModel>>> Handle(GetAllActiviesRequest request, CancellationToken cancellationToken)
     {
-        
-        var activities = await context.Activities
+
+        var activities = await context.Services
             .Select(x => new ActivityModel(x))
             .ToListAsync(cancellationToken);
         return activities.Count == 0 ?  Result<IEnumerable<ActivityModel>>.Fail("Profile not found") : Result<IEnumerable<ActivityModel>>.Ok(activities);

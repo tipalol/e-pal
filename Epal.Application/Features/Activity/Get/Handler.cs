@@ -13,7 +13,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<Activity
 {
     public async Task<Result<ActivityModel>> Handle(ActivityRequest request, CancellationToken cancellationToken)
     {
-        var activity = await context.Activities.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var activity = await context.Services.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         return activity is null ?  Result<ActivityModel>.Fail("Profile not found") : Result<ActivityModel>.Ok(new ActivityModel(activity));
     }
 }

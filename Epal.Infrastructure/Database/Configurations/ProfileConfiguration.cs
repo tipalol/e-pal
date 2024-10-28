@@ -11,8 +11,13 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
     {
         builder.Property(x => x.Status)
             .HasConversion(status => status.ToString(), s => Enum.Parse<UserStatus>(s));
-        
+
         builder.HasIndex(x => x.Username);
         builder.HasIndex(x => x.ProfileType);
+
+        builder.HasMany(x => x.Services)
+            .WithOne(x => x.Profile)
+            .HasForeignKey(x => x.ProfileId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -1,12 +1,12 @@
-﻿using Epal.Domain.Entities.Base;
+using Epal.Domain.Entities.Base;
 
 namespace Epal.Domain.Entities;
 
-// TODO SERVICE
-public class Activity : Entity
+public class ServiceType : Entity
 {
     public string Name { get; set; }
     public string Description { get; set; }
     public string Avatar { get; set; }
-    public string Icon { get; set; }
+
+    public ICollection<Service> Services { get; set; }
 }
