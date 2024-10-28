@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Epal.Api.Controllers.Admin;
 
+/// <summary>
+/// Админ контроллер для управления пользователями
+/// </summary>
 [Authorize]
-/// <inheritdoc />
 public class UsersController(ISender sender) : RestController(sender)
 {
     /// <summary>
@@ -20,21 +22,21 @@ public class UsersController(ISender sender) : RestController(sender)
     [HttpGet]
     public async Task<IEnumerable<Profile>> GetUsers()
         => await Sender.Send(new GetUsersRequest());
-    
+
     /// <summary>
     /// Получение пользователя по айди
     /// </summary>
     [HttpGet("{id:guid}")]
     public async Task<Profile> GetUser([FromRoute(Name = "id")] Guid id)
         => await Sender.Send(new GetUserRequest(id));
-    
+
     /// <summary>
     /// Добавление нового пользователя
     /// </summary>
     [HttpPost]
     public async Task<Profile> AddUser(CreateUserRequest request)
         => await Sender.Send(request);
-    
+
     /// <summary>
     /// Удаление пользователя
     /// </summary>

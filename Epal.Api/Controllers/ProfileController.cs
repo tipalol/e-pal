@@ -15,14 +15,12 @@ public class ProfileController(ISender sender) : RestController(sender)
     [HttpGet, Authorize]
     public async Task<Result<ProfileResponse>> GetMyProfile()
         => await Sender.Send(new MyProfileRequest());
-    
-    [HttpGet("username")]
-    public async Task<Result<ProfileResponse>> GetByUsername(string username)
+
+    [HttpGet("{username}")]
+    public async Task<Result<ProfileResponse>> GetByUsername([FromRoute(Name = "username")] string username)
         => await Sender.Send(new ProfileRequest(username));
 
     [HttpPost, Authorize]
     public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel model)
-    {
-        return await Sender.Send(new UpdateProfileRequest(model));
-    }
+        => await Sender.Send(new UpdateProfileRequest(model));
 }

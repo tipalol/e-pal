@@ -10,7 +10,6 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
 {
     public DbSet<Profile> Users { get; private  set; }
     public DbSet<Service> Services { get; private  set;}
-
     public DbSet<ServiceType> ServiceTypes { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,7 +18,7 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         foreach (var entry in ChangeTracker.Entries<DateTrackedEntity>())
         {
