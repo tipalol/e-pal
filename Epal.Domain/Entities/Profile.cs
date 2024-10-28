@@ -6,11 +6,14 @@ namespace Epal.Domain.Entities;
 public class Profile : DateTrackedEntity
 {
     public string Email { get; set; }
+    public string Avatar { get; set; }
+    public string Languages { get; set; }
     public string? Username { get; set; }
     public string PasswordHash { get; set; }
     public decimal Balance { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Created;
     public ProfileType ProfileType { get; set; } = ProfileType.User;
+    public DateTime? EpalStatusAcquiring { get; set; }
 
     public ICollection<Service> Services { get; set; } = [];
     public ICollection<Order> BoughtOrders { get; set; } = new List<Order>();

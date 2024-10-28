@@ -1,4 +1,7 @@
 using Epal.Api.Controllers.Base;
+using Epal.Application.Features.Admin.Users.Get;
+using Epal.Application.Features.Catalog.Profiles.Get;
+using Epal.Application.Features.Catalog.Profiles.Models;
 using Epal.Application.Features.Catalog.ServiceTypes.Get;
 using Epal.Application.Features.Catalog.ServiceTypes.Get.Models;
 using MediatR;
@@ -11,4 +14,7 @@ public class CatalogController(ISender sender) : RestController(sender)
     [HttpGet("serviceTypes")]
     public async Task<IEnumerable<ServiceTypeCatalogView>> GetServiceTypes(int take)
         => await Sender.Send(new ServiceTypesCatalogRequest(take));
+    [HttpGet("serviceType/{id:guid}")]
+    public async Task<IEnumerable<ProfileView>> GetEpalProfiles([FromRoute(Name = "id")] Guid id, int take)
+        => await Sender.Send(new GetProfilesByServiceTypsRequest(id, take));
 }
