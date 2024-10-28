@@ -22,16 +22,18 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         var newUsernameExisted = await context.Users
             .AnyAsync(x => x.Username == updateProfileRequest.ProfileModel.Username, cancellationToken);
         
+        // TODO
         if (newUsernameExisted && userService.AuthenticatedUser.Username != updateProfileRequest.ProfileModel.Username)
             return Result<ProfileResponse>.Fail("Username is not available");
         
         profile.Username = updateProfileRequest.ProfileModel.Username;
+        // TODO
         if (string.IsNullOrEmpty(profile.Avatar) || profile.Avatar == StaticValues.DefaultAvatarByGender(profile.Gender)) //Если аватар не меняли
         {
             profile.Avatar = StaticValues.DefaultAvatarByGender(updateProfileRequest.ProfileModel.Gender ?? Gender.Unselected);
         }
         profile.Gender = updateProfileRequest.ProfileModel.Gender ?? Gender.Unselected;
-        //
+        // TODO
         profile.Languages = "";
         await context.SaveChangesAsync(cancellationToken);
         

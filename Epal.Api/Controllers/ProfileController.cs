@@ -4,7 +4,6 @@ using Epal.Application.Features.Profiles.Get;
 using Epal.Application.Features.Profiles.Get.MyProfile;
 using Epal.Application.Features.Profiles.Models;
 using Epal.Application.Features.Profiles.Post;
-using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

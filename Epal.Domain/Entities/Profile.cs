@@ -7,8 +7,8 @@ public class Profile : DateTrackedEntity
 {
     public Gender Gender { get; set; } = Gender.Unselected;
     public string Email { get; set; }
-    public string Avatar { get; set; }
-    public string Languages { get; set; }
+    public string Avatar { get; set; } = "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256";
+    public string Languages { get; set; } = "Russian";
     public string Username { get; set; }
     public string PasswordHash { get; set; }
     public decimal Balance { get; set; }

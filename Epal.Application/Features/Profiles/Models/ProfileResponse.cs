@@ -9,7 +9,7 @@ namespace Epal.Application.Features.Profiles.Models;
     public string? Username { get; set; }
     public required UserStatus Status { get; set; }
     public Gender Gender { get; set; }
-    public string Avatar { get; set; } = "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256";
+    public string Avatar { get; set; }
     public string Languages { get; set; } = "РУССКИЙ";
 
     public static ProfileResponse FromProfile(Profile profile)
@@ -24,6 +24,4 @@ namespace Epal.Application.Features.Profiles.Models;
             Gender = profile.Gender
         };
     }
-
-   
 }
