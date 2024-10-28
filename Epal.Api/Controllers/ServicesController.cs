@@ -1,8 +1,7 @@
 ﻿using Epal.Api.Controllers.Base;
 using Epal.Application.Common;
-using Epal.Application.Features.Services.Add;
-using Epal.Application.Features.Services.Add.Models;
 using Epal.Application.Features.Services.AddOrUpdate;
+using Epal.Application.Features.Services.AddOrUpdate.Models;
 using Epal.Application.Features.Services.Get;
 using Epal.Application.Features.Services.Get.Models;
 using Epal.Application.Features.Services.GetTypes;

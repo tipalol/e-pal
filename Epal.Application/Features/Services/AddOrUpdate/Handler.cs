@@ -1,5 +1,5 @@
 ﻿using Epal.Application.Common;
-using Epal.Application.Features.Services.Add.Models;
+using Epal.Application.Features.Services.AddOrUpdate.Models;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
@@ -54,7 +54,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             ServiceTypeId = serviceType.Id,
             ProfileId = profile.Id,
             Price = serviceDto.Price,
-            Icon = ""
+            Icon = " "
         };
 
         await context.Services.AddAsync(service, cancellationToken);
