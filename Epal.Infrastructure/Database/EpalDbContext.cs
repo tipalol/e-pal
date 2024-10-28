@@ -11,6 +11,7 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
     public DbSet<Profile> Users { get; private  set; }
     public DbSet<Service> Services { get; private  set;}
     public DbSet<ServiceType> ServiceTypes { get; private set; }
+    public DbSet<Order> Orders { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
