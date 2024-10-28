@@ -21,8 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Admin\ServiceType\" />
-      <Folder Include="Features\Orders\" />
+      <Folder Include="Features\Admin\ServiceTypes\" />
+      <Folder Include="Features\Catalog\ServiceTypes\Get\Validation\" />
+      <Folder Include="Features\Orders\Add\" />
+      <Folder Include="Features\Orders\Details\" />
     </ItemGroup>
 
     <ItemGroup>
