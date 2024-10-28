@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Admin\" />
+      <Folder Include="Features\Admin\ServiceType\" />
       <Folder Include="Features\Orders\" />
     </ItemGroup>
 

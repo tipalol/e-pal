@@ -13,13 +13,8 @@ namespace Epal.Api.Controllers;
 
 public class CatalogController(ISender sender) : RestController(sender)
 {
-    [HttpGet("/GetByTypes")]
+    [HttpGet("/ServiceTypes")]
     public async Task<IEnumerable<ServiceType>> GetServiceTypes(int TakeCount)
         => await Sender.Send(new ServiceTypesCatalogRequest(TakeCount));
 
-}
-
-class MyClass
-{
-    
 }
