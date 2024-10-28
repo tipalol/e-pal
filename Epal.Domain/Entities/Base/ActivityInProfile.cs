@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Epal.Domain.Entities.Base;
-//составной ключ
+// TODO SERVICE
 public class ActivityInProfile
 {
     public Profile Profile { get; set; }

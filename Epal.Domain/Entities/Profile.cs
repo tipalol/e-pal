@@ -4,6 +4,7 @@ using Epal.Domain.Enums;
 
 namespace Epal.Domain.Entities;
 
+//TODO добавить сюда релейшн на предоаставляемые услуги
 public class Profile : DateTrackedEntity
 {
     public Profile()

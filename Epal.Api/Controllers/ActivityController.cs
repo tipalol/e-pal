@@ -1,7 +1,6 @@
 ﻿using Epal.Api.Controllers.Base;
 using Epal.Application.Common;
 using Epal.Application.Features.Activity.Get;
-using Epal.Application.Features.Activity.Get.MyActivies;
 using Epal.Application.Features.Activity.GetAll;
 using Epal.Application.Features.Activity.Models;
 using Epal.Application.Features.Activity.Post;
@@ -24,6 +23,7 @@ public class ActivityController(ISender sender) : RestController(sender)
     public async Task<Result<IEnumerable<ActivityModel>>> GetActivies()
         => await Sender.Send(new GetAllActiviesRequest());
     [HttpPost]
+    // TODO ACRIVITY
     public async Task<Result> AddAcrivity(CreateActivityRequest request)
         => await Sender.Send(request);
 

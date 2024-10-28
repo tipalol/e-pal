@@ -17,7 +17,7 @@ namespace Epal.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Discription = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     Avatar = table.Column<string>(type: "text", nullable: false),
                     Icon = table.Column<string>(type: "text", nullable: false)
                 },

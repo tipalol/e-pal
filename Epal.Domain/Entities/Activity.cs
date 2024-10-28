@@ -2,6 +2,7 @@
 
 namespace Epal.Domain.Entities;
 
+// TODO SERVICE
 public class Activity : Entity
 {
     public string Name { get; set; }
