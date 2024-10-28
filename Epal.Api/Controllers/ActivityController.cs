@@ -20,13 +20,9 @@ public class ActivityController(ISender sender) : RestController(sender)
     [HttpGet("{id:guid}")]
     public async Task<Result<ActivityModel>> GetActivityById([FromRoute(Name = "id")]Guid id)
         => await Sender.Send(new ActivityRequest(id));
-    [HttpGet("/my")]
-    public async Task<Result<IEnumerable<ActivityModel>>> GetMyActivies()
-        => await Sender.Send(new MyActivityRequest());
     [HttpGet]
     public async Task<Result<IEnumerable<ActivityModel>>> GetActivies()
         => await Sender.Send(new GetAllActiviesRequest());
-
     [HttpPost]
     public async Task<Result> AddAcrivity(CreateActivityRequest request)
         => await Sender.Send(request);

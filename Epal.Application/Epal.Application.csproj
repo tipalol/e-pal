@@ -24,4 +24,16 @@
       <Folder Include="Features\Admin\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Features\Activity\Get\MyActivies\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Features\Activity\Get\MyActivies\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Features\Activity\Get\MyActivies\**" />
+    </ItemGroup>
+
 </Project>
