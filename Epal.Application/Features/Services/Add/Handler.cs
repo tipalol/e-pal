@@ -27,6 +27,25 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         if (serviceType == null)
             return Result.Fail("Service type not found");
 
+        if (serviceDto.Id.HasValue)
+        {
+            var dbService = await context.Services
+                .SingleOrDefaultAsync(x => x.Id == serviceDto.Id.Value, cancellationToken);
+
+            if (dbService == null)
+                return Result.Fail("Service not found");
+
+            dbService.Name = serviceDto.Name;
+            dbService.Description = serviceDto.Description;
+            dbService.Price = serviceDto.Price;
+            dbService.ServiceTypeId = serviceDto.ServiceTypeId;
+            dbService.Avatar = serviceDto.Avatar;
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return Result.Ok();
+        }
+
         var service = new Service
         {
             Name = serviceDto.Name,

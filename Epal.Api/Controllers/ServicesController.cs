@@ -23,6 +23,6 @@ public class ServicesController(ISender sender) : RestController(sender)
         => await Sender.Send(new GetServicesRequest(profileId, categoryId));
 
     [HttpPost, Authorize]
-    public async Task<Result> Add(ServiceDto serviceDto)
+    public async Task<Result> AddOrUpdate(ServiceDto serviceDto)
         => await Sender.Send(new CreateServiceRequest(serviceDto));
 }
