@@ -5,10 +5,12 @@ using Epal.Application.Features.Admin.Users.GetAll;
 using Epal.Application.Features.Admin.Users.Remove;
 using Epal.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Epal.Api.Controllers.Admin;
 
+[Authorize]
 /// <inheritdoc />
 public class UsersController(ISender sender) : RestController(sender)
 {
