@@ -13,6 +13,8 @@ public class Profile : DateTrackedEntity
     public ProfileType ProfileType { get; set; } = ProfileType.User;
 
     public ICollection<Service> Services { get; set; } = [];
+    public ICollection<Order> BoughtOrders { get; set; } = new List<Order>();
+    public ICollection<Order> SoldOrders { get; set; } = new List<Order>();
 
     public static Profile Create(string email, string passwordHash)
     {

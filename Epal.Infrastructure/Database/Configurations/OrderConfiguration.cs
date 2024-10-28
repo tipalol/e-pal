@@ -8,7 +8,15 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
-        builder.HasOne(x => x.Service);
-        builder.HasOne(x => x.Buyer);
+        builder.HasOne(o => o.Buyer)
+            .WithMany(p => p.BoughtOrders)
+            .HasForeignKey(o => o.BuyerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(o => o.Seller)
+            .WithMany(p => p.SoldOrders)
+            .HasForeignKey(o => o.SellerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
 }

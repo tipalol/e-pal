@@ -3,6 +3,7 @@ using System;
 using Epal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    partial class EpalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028142641_ReworkOrders")]
+    partial class ReworkOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +37,9 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("ProfileId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uuid");
 
@@ -52,6 +58,8 @@ namespace Epal.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BuyerId");
+
+                    b.HasIndex("ProfileId");
 
                     b.HasIndex("SellerId");
 
@@ -168,15 +176,19 @@ namespace Epal.Infrastructure.Migrations
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Epal.Domain.Entities.Profile", "Buyer")
-                        .WithMany("BoughtOrders")
+                        .WithMany()
                         .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Epal.Domain.Entities.Profile", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("ProfileId");
+
                     b.HasOne("Epal.Domain.Entities.Profile", "Seller")
-                        .WithMany("SoldOrders")
+                        .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Epal.Domain.Entities.Service", "Service")
@@ -213,11 +225,9 @@ namespace Epal.Infrastructure.Migrations
 
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
-                    b.Navigation("BoughtOrders");
+                    b.Navigation("Orders");
 
                     b.Navigation("Services");
-
-                    b.Navigation("SoldOrders");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>
