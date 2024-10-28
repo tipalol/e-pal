@@ -10,8 +10,6 @@ public record TokenRequest(Guid Id, string Email, string? Username) : IRequest<s
 
 public class Handler : IRequestHandler<TokenRequest, string>
 {
-    private const string SecretKey = "Ez4+=UE!~Jf}j<&ZAghEk:9n{ZP4TCTg";
-
     public Task<string> Handle(TokenRequest request, CancellationToken cancellationToken)
         => Task.FromResult(CreateTokenString(request.Id, request.Username, request.Email));
     
@@ -23,13 +21,14 @@ public class Handler : IRequestHandler<TokenRequest, string>
             new (ClaimTypes.Email, email),
         ];
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+        var signingCredentials = new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256Signature);
         var token = new JwtSecurityToken(
+            issuer: AuthOptions.Issuer,
+            audience: AuthOptions.Audience,
             claims: claims,
             notBefore: DateTime.UtcNow,
             expires: DateTime.UtcNow.AddHours(12),
-            signingCredentials: creds);
+            signingCredentials: signingCredentials);
         
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

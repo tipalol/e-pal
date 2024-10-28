@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Admin.Users.GetAll;
 
-public record GetUsersRequest : IRequest<IEnumerable<User>>;
+public record GetUsersRequest : IRequest<IEnumerable<Profile>>;
 
-internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUsersRequest, IEnumerable<User>>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUsersRequest, IEnumerable<Profile>>
 {
-    public async Task<IEnumerable<User>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Domain.Entities.Profile>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
         return await context.Users.ToListAsync(cancellationToken);
     }

@@ -10,12 +10,12 @@ namespace Epal.Api.Controllers;
 public class RegisterController(ISender sender) : RestController(sender)
 {
     [HttpPost]
-    public async Task Register(RegistrationRequest request)
+    public async Task<string> Register(RegistrationRequest request)
         => await Sender.Send(request);
-    
+
     [HttpPost("resend")]
-    public async Task ResendEmail(ResendEmailConfirmationRequest verificationRequest)
-        => await Sender.Send(verificationRequest);
+    public async Task ResendEmail(string email)
+        => await Sender.Send(new ResendEmailConfirmationRequest(email));
 
     [HttpPost("confirm")]
     public async Task<bool> ConfirmEmail(EmailConfirmRequest verificationRequest)
