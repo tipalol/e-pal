@@ -14,7 +14,8 @@ public class CatalogController(ISender sender) : RestController(sender)
     [HttpGet("serviceTypes")]
     public async Task<IEnumerable<ServiceTypeCatalogView>> GetServiceTypes(int take)
         => await Sender.Send(new ServiceTypesCatalogRequest(take));
-    [HttpGet("serviceType/{id:guid}")]
-    public async Task<IEnumerable<ProfileView>> GetEpalProfiles([FromRoute(Name = "id")] Guid id, int take)
-        => await Sender.Send(new GetProfilesByServiceTypsRequest(id, take));
+    
+    [HttpGet("serviceType/{serviceTypeId:guid}")]
+    public async Task<IEnumerable<ProfileView>> GetEpalProfiles([FromRoute(Name = "serviceTypeId")] Guid serviceTypeId, int take)
+        => await Sender.Send(new EpalsByServiceTypeCatalogRequest(serviceTypeId, take));
 }
