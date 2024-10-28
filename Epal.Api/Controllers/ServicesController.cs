@@ -2,6 +2,7 @@
 using Epal.Application.Common;
 using Epal.Application.Features.Services.Add;
 using Epal.Application.Features.Services.Add.Models;
+using Epal.Application.Features.Services.AddOrUpdate;
 using Epal.Application.Features.Services.Get;
 using Epal.Application.Features.Services.Get.Models;
 using Epal.Application.Features.Services.GetTypes;
@@ -24,5 +25,5 @@ public class ServicesController(ISender sender) : RestController(sender)
 
     [HttpPost, Authorize]
     public async Task<Result> AddOrUpdate(ServiceDto serviceDto)
-        => await Sender.Send(new CreateServiceRequest(serviceDto));
+        => await Sender.Send(new CreateOrUpdateServiceRequest(serviceDto));
 }

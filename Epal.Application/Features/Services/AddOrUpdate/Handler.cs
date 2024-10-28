@@ -5,13 +5,13 @@ using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Services.Add;
+namespace Epal.Application.Features.Services.AddOrUpdate;
 
-public record CreateServiceRequest(ServiceDto ServiceDto) : IRequest<Result>;
+public record CreateOrUpdateServiceRequest(ServiceDto ServiceDto) : IRequest<Result>;
 
-internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<CreateServiceRequest, Result>
+internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<CreateOrUpdateServiceRequest, Result>
 {
-    public async Task<Result> Handle(CreateServiceRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateOrUpdateServiceRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
         var profile = await context.Users
