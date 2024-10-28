@@ -35,7 +35,7 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
