@@ -1,17 +1,17 @@
 ﻿using Epal.Application.Common;
-using Epal.Application.Features.Services.Add.Models;
+using Epal.Application.Features.Services.AddOrUpdate.Models;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Services.Add;
+namespace Epal.Application.Features.Services.AddOrUpdate;
 
-public record CreateServiceRequest(ServiceDto ServiceDto) : IRequest<Result>;
+public record CreateOrUpdateServiceRequest(ServiceDto ServiceDto) : IRequest<Result>;
 
-internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<CreateServiceRequest, Result>
+internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<CreateOrUpdateServiceRequest, Result>
 {
-    public async Task<Result> Handle(CreateServiceRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateOrUpdateServiceRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
         var profile = await context.Users
@@ -53,11 +53,11 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             Avatar = serviceDto.Avatar,
             ServiceTypeId = serviceType.Id,
             ProfileId = profile.Id,
-            Price = serviceDto.Price
+            Price = serviceDto.Price,
+            Icon = " "
         };
 
-        profile.Services.Add(service);
-
+        await context.Services.AddAsync(service, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
         return Result.Ok();

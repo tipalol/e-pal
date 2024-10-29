@@ -13,4 +13,7 @@ public class Order : DateTrackedEntity
 
     public Guid BuyerId { get; set; }
     public Profile Buyer { get; set; }
+
+    public Guid SellerId { get; set; }
+    public Profile Seller { get; set; }
 }

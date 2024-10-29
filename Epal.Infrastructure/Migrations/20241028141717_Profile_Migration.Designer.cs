@@ -3,6 +3,7 @@ using System;
 using Epal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    partial class EpalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028141717_Profile_Migration")]
+    partial class Profile_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +37,6 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("SellerId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ServiceId")
                         .HasColumnType("uuid");
 
@@ -52,8 +52,6 @@ namespace Epal.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BuyerId");
-
-                    b.HasIndex("SellerId");
 
                     b.HasIndex("ServiceId");
 
@@ -83,9 +81,6 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<DateTime?>("EpalStatusAcquiring")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Languages")
                         .IsRequired()
                         .HasColumnType("text");
@@ -105,7 +100,6 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -183,15 +177,9 @@ namespace Epal.Infrastructure.Migrations
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Epal.Domain.Entities.Profile", "Buyer")
-                        .WithMany("BoughtOrders")
+                        .WithMany()
                         .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Epal.Domain.Entities.Profile", "Seller")
-                        .WithMany("SoldOrders")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Epal.Domain.Entities.Service", "Service")
@@ -201,8 +189,6 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Buyer");
-
-                    b.Navigation("Seller");
 
                     b.Navigation("Service");
                 });
@@ -228,11 +214,7 @@ namespace Epal.Infrastructure.Migrations
 
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
                 {
-                    b.Navigation("BoughtOrders");
-
                     b.Navigation("Services");
-
-                    b.Navigation("SoldOrders");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>

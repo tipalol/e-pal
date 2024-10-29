@@ -1,3 +1,5 @@
-﻿namespace Epal.Application.Features.Profiles.Models;
+﻿using Epal.Domain.Enums;
 
-public record ProfileModel(string Username);
+namespace Epal.Application.Features.Profiles.Models;
+
+public record ProfileModel(string Username, Gender? Gender);

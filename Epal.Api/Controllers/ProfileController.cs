@@ -21,6 +21,6 @@ public class ProfileController(ISender sender) : RestController(sender)
         => await Sender.Send(new ProfileRequest(username));
 
     [HttpPost, Authorize]
-    public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel model)
-        => await Sender.Send(new UpdateProfileRequest(model));
+    public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel profileModel)
+        => await Sender.Send(new UpdateProfileRequest(profileModel));
 }
