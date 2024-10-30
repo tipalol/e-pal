@@ -4,12 +4,13 @@ using Epal.Domain.Entities;
 using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Api.Controllers.Admin;
 
 public class SeedController(ISender _, IEpalDbContext context, IPasswordService passwordService) : RestController(_)
 {
+    private static List<string> Names { get; set; } = [];
+    
     [HttpGet("profiles")]
     public async Task SeedProfiles(int count)
     {
@@ -24,6 +25,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
             var bio = GenerateRandomBio(random);
             var username = GenerateRandomGamerNickname(4, 10, random);
             var epalStatusAcquiring = GenerateRandomPastDate(random);
+            Names.Add(username);
 
             var profile = new Profile
             {
@@ -43,6 +45,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
         }
 
         await context.SaveChangesAsync(CancellationToken.None);
+        Names = [];
     }
 
     [HttpGet("categories")]
@@ -100,8 +103,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
             else if (nickname.Length < minLength)
                 // Append random digits to reach minimum length
                 nickname += random.Next(10, 99).ToString();
-            ;
-        } while (context.Users.Any(x => x.Username == nickname));
+        } while (Names.Any(x => string.Equals(x, nickname)));
 
         return nickname;
     }
