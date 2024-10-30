@@ -21,7 +21,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             return Result.Fail("User not found");
 
         var serviceDto = request.ServiceDto;
-        var serviceType = await context.ServiceTypes
+        var serviceType = await context.Categories
             .SingleOrDefaultAsync(x => x.Id == serviceDto.ServiceTypeId, cancellationToken);
 
         if (serviceType == null)
@@ -38,7 +38,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             dbService.Name = serviceDto.Name;
             dbService.Description = serviceDto.Description;
             dbService.Price = serviceDto.Price;
-            dbService.ServiceTypeId = serviceDto.ServiceTypeId;
+            dbService.CategoryId = serviceDto.ServiceTypeId;
             dbService.Avatar = serviceDto.Avatar;
 
             await context.SaveChangesAsync(cancellationToken);
@@ -51,7 +51,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             Name = serviceDto.Name,
             Description = serviceDto.Description,
             Avatar = serviceDto.Avatar,
-            ServiceTypeId = serviceType.Id,
+            CategoryId = serviceType.Id,
             ProfileId = profile.Id,
             Price = serviceDto.Price,
             Icon = " "

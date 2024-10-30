@@ -22,7 +22,7 @@
 
     <ItemGroup>
       <Folder Include="Features\Admin\ServiceTypes\" />
-      <Folder Include="Features\Catalog\ServiceTypes\Get\Validation\" />
+      <Folder Include="Features\Catalog\Categories\Get\Validation\" />
     </ItemGroup>
 
     <ItemGroup>

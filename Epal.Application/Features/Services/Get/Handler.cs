@@ -19,14 +19,14 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetServi
         if (profile == null)
             return Result<IEnumerable<ServiceListView>>.Fail("User not found");
 
-        var serviceType = await context.ServiceTypes
+        var serviceType = await context.Categories
             .SingleOrDefaultAsync(x => x.Id == request.ServiceTypeId, cancellationToken);
 
         if (serviceType == null)
             return Result<IEnumerable<ServiceListView>>.Fail("Service type not found");
 
         var services = profile.Services
-            .Where(x => x.ServiceTypeId == serviceType.Id)
+            .Where(x => x.CategoryId == serviceType.Id)
             .Select(x => new ServiceListView(x.Id, x.Name, x.Avatar, x.Price, serviceType.Id))
             .ToArray();
 
