@@ -34,7 +34,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         }
         profile.Gender = updateProfileRequest.ProfileModel.Gender ?? Gender.Unselected;
         // TODO
-        profile.Languages = "";
+        profile.Languages = updateProfileRequest.ProfileModel.Languages;
         await context.SaveChangesAsync(cancellationToken);
         
         return Result<ProfileResponse>.Ok(ProfileResponse.FromProfile(profile));

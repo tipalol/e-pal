@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Epal.Api.Controllers.Admin;
 
-[Authorize]
+
 public class ServiceTypesController(ISender sender) : RestController(sender)
 {
     // TODO Get All, Add, Remove
