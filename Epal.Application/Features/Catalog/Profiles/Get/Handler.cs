@@ -1,6 +1,5 @@
 ﻿using Epal.Application.Common;
 using Epal.Application.Features.Catalog.Profiles.Models;
-using Epal.Application.Features.Catalog.ServiceTypes.Get;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using Epal.Domain.Enums;

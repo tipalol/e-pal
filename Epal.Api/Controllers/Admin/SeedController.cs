@@ -4,6 +4,7 @@ using Epal.Domain.Entities;
 using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Api.Controllers.Admin;
 
@@ -77,6 +78,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
 
     private string GenerateRandomGamerNickname(int minLength, int maxLength, Random random)
     {
+        
         var adjectives = new[]
         {
             "Dark", "Silent", "Furious", "Epic", "Crazy", "Mighty", "Wild", "Shadow", "Ghost", "Rapid", "Stealthy",
@@ -87,14 +89,20 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
             "Warrior", "Ninja", "Sniper", "Ranger", "Hunter", "Samurai", "Gamer", "Knight", "Dragon", "Wolf", "Phoenix",
             "Viper", "Falcon", "Reaper"
         };
-        var nickname = adjectives[random.Next(adjectives.Length)] + nouns[random.Next(nouns.Length)];
+        string nickname;
+        do
+        {
+            nickname = adjectives[random.Next(adjectives.Length)] + nouns[random.Next(nouns.Length)];
 
-        // Adjust nickname length to be within specified bounds
-        if (nickname.Length > maxLength)
-            nickname = nickname.Substring(0, maxLength);
-        else if (nickname.Length < minLength)
-            // Append random digits to reach minimum length
-            nickname += random.Next(10, 99).ToString();
+            // Adjust nickname length to be within specified bounds
+            if (nickname.Length > maxLength)
+                nickname = nickname.Substring(0, maxLength);
+            else if (nickname.Length < minLength)
+                // Append random digits to reach minimum length
+                nickname += random.Next(10, 99).ToString();
+            ;
+        } while (context.Users.Any(x => x.Username == nickname));
+
         return nickname;
     }
 
