@@ -13,8 +13,8 @@ namespace Epal.Api.Controllers;
 public class CatalogController(ISender sender) : RestController(sender)
 {
     [HttpGet("serviceTypes")]
-    public async Task<IEnumerable<ServiceTypeCatalogView>> GetServiceTypes(int take)
-        => await Sender.Send(new ServiceTypesCatalogRequest(take));
+    public async Task<PaginatedResult<ServiceTypeCatalogView>> GetServiceTypes(int take = 6, int skip = 0)
+        => await Sender.Send(new ServiceTypesCatalogRequest(take, skip));
     
     [HttpGet("epals")]
     public async Task<PaginatedResult<ProfileView>> GetEpalProfiles(Guid? serviceTypeId, int take = 20, int skip = 0, SortingType sort = SortingType.None)
