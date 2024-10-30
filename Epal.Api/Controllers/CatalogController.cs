@@ -1,10 +1,9 @@
 using Epal.Api.Controllers.Base;
 using Epal.Application.Common;
-using Epal.Application.Features.Admin.Users.Get;
+using Epal.Application.Features.Catalog.Categories.Get;
+using Epal.Application.Features.Catalog.Categories.Get.Models;
 using Epal.Application.Features.Catalog.Profiles.Get;
 using Epal.Application.Features.Catalog.Profiles.Models;
-using Epal.Application.Features.Catalog.ServiceTypes.Get;
-using Epal.Application.Features.Catalog.ServiceTypes.Get.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +11,8 @@ namespace Epal.Api.Controllers;
 
 public class CatalogController(ISender sender) : RestController(sender)
 {
-    [HttpGet("serviceTypes")]
-    public async Task<PaginatedResult<ServiceTypeCatalogView>> GetServiceTypes(int take = 6, int skip = 0)
+    [HttpGet("categories")]
+    public async Task<PaginatedResult<CategoryCatalogView>> GetServiceTypes(int take = 6, int skip = 0)
         => await Sender.Send(new ServiceTypesCatalogRequest(take, skip));
     
     [HttpGet("epals")]

@@ -12,6 +12,6 @@ public class Service : Entity
 
     public Guid ProfileId { get; set; }
     public Profile Profile { get; set; }
-    public Guid ServiceTypeId { get; set; }
-    public ServiceType ServiceType { get; set; }
+    public Guid CategoryId { get; set; }
+    public Category Category { get; set; }
 }

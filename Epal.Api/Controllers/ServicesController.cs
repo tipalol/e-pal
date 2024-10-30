@@ -5,8 +5,8 @@ using Epal.Application.Features.Services.AddOrUpdate.Models;
 using Epal.Application.Features.Services.ById;
 using Epal.Application.Features.Services.Get;
 using Epal.Application.Features.Services.Get.Models;
-using Epal.Application.Features.Services.GetTypes;
-using Epal.Application.Features.Services.GetTypes.Models;
+using Epal.Application.Features.Services.GetCategories;
+using Epal.Application.Features.Services.GetCategories.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ namespace Epal.Api.Controllers;
 public class ServicesController(ISender sender) : RestController(sender)
 {
     [HttpGet("{profileId:guid}/categories")]
-    public async Task<Result<IEnumerable<ServiceTypeListView>>> GetTypes([FromRoute(Name = "profileId")] Guid profileId)
+    public async Task<Result<IEnumerable<CategoryListView>>> GetTypes([FromRoute(Name = "profileId")] Guid profileId)
         => await Sender.Send(new GetServiceTypesRequest(profileId));
 
     [HttpGet("{profileId:guid}/category/{categoryId:guid}")]
@@ -24,7 +24,7 @@ public class ServicesController(ISender sender) : RestController(sender)
         => await Sender.Send(new GetServicesRequest(profileId, categoryId));
     
     [HttpGet("category/{categoryId:guid}")]
-    public async Task<Result<ServiceTypeListView>> Get([FromRoute(Name = "categoryId")] Guid categoryId)
+    public async Task<Result<CategoryListView>> Get([FromRoute(Name = "categoryId")] Guid categoryId)
         => await Sender.Send(new GetServiceTypeById(categoryId));
 
     [HttpPost, Authorize]

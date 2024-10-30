@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    [Migration("20241028183628_ChangeProfile")]
-    partial class ChangeProfile
+    [Migration("20241030193459_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,29 @@ namespace Epal.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Epal.Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
                 {
@@ -76,6 +99,9 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -86,6 +112,10 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<DateTime?>("EpalStatusAcquiring")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Languages")
                         .IsRequired()
                         .HasColumnType("text");
@@ -94,8 +124,9 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ProfileType")
-                        .HasColumnType("integer");
+                    b.Property<string>("ProfileType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -127,6 +158,9 @@ namespace Epal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -145,39 +179,13 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ServiceTypeId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ProfileId");
 
-                    b.HasIndex("ServiceTypeId");
-
                     b.ToTable("Services");
-                });
-
-            modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Avatar")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
@@ -209,21 +217,26 @@ namespace Epal.Infrastructure.Migrations
 
             modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
                 {
+                    b.HasOne("Epal.Domain.Entities.Category", "Category")
+                        .WithMany("Services")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Epal.Domain.Entities.Profile", "Profile")
                         .WithMany("Services")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Epal.Domain.Entities.ServiceType", "ServiceType")
-                        .WithMany("Services")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Category");
 
                     b.Navigation("Profile");
+                });
 
-                    b.Navigation("ServiceType");
+            modelBuilder.Entity("Epal.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Profile", b =>
@@ -233,11 +246,6 @@ namespace Epal.Infrastructure.Migrations
                     b.Navigation("Services");
 
                     b.Navigation("SoldOrders");
-                });
-
-            modelBuilder.Entity("Epal.Domain.Entities.ServiceType", b =>
-                {
-                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

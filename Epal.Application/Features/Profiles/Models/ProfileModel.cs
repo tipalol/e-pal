@@ -2,4 +2,4 @@
 
 namespace Epal.Application.Features.Profiles.Models;
 
-public record ProfileModel(string Username, Gender? Gender, string Languages);
+public record ProfileModel(string Username, Gender? Gender = Gender.Unselected, string Languages = "");

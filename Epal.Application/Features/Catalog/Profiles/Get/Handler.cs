@@ -1,6 +1,5 @@
 ﻿using Epal.Application.Common;
 using Epal.Application.Features.Catalog.Profiles.Models;
-using Epal.Application.Features.Catalog.ServiceTypes.Get;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
 using Epal.Domain.Enums;
@@ -18,7 +17,7 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByServiceTyp
             .Where(x => x.ProfileType == ProfileType.Epal);
 
         if (request.ServiceTypeId.HasValue)
-            query = query.Where(x => x.Services.Any(x => x.ServiceTypeId == request.ServiceTypeId));
+            query = query.Where(x => x.Services.Any(x => x.CategoryId == request.ServiceTypeId));
 
         query = ApplySorting(query, request.Sort);
 

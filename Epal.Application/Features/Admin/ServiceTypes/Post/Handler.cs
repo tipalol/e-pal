@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Admin.ServiceTypes.Post;
 
-public record AddOrUpdateServiceTypeRequest(Guid? Id, string Name, string Description, string Avatar) : IRequest<Result>;
+public record AddOrUpdateCategoryRequest(Guid? Id, string Name, string Description, string Avatar) : IRequest<Result>;
 
-public class Handler(IEpalDbContext context) : IRequestHandler<AddOrUpdateServiceTypeRequest, Result>
+public class Handler(IEpalDbContext context) : IRequestHandler<AddOrUpdateCategoryRequest, Result>
 {
-    public async Task<Result> Handle(AddOrUpdateServiceTypeRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(AddOrUpdateCategoryRequest request, CancellationToken cancellationToken)
     {
         if (request.Id.HasValue)
         {
-            var existedServiceType = await context.ServiceTypes
+            var existedServiceType = await context.Categories
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
             
             if (existedServiceType == null)
-                return Result.Fail("Service type not found");
+                return Result.Fail("Category not found");
             
             existedServiceType.Name = request.Name;
             existedServiceType.Avatar = request.Avatar;
@@ -28,7 +28,7 @@ public class Handler(IEpalDbContext context) : IRequestHandler<AddOrUpdateServic
         }
         else
         {
-            await context.ServiceTypes.AddAsync(new ServiceType
+            await context.Categories.AddAsync(new Category
             {
                 Name = request.Name,
                 Avatar = request.Avatar,
