@@ -1,4 +1,5 @@
-﻿using Epal.Application.Features.Catalog.Profiles.Models;
+﻿using Epal.Application.Common;
+using Epal.Application.Features.Catalog.Profiles.Models;
 using Epal.Application.Features.Catalog.ServiceTypes.Get;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
@@ -8,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Catalog.Profiles.Get;
 
-public record EpalsByServiceTypeCatalogRequest(Guid? ServiceTypeId, SortingType Sort, int Take = 20): IRequest<IEnumerable<ProfileView>>;
-public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByServiceTypeCatalogRequest, IEnumerable<ProfileView>>
+public record EpalsByServiceTypeCatalogRequest(Guid? ServiceTypeId, SortingType Sort, int Take = 20, int Skip = 0): IRequest<PaginatedResult<ProfileView>>;
+public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByServiceTypeCatalogRequest, PaginatedResult<ProfileView>>
 {
-    public async Task<IEnumerable<ProfileView>> Handle(EpalsByServiceTypeCatalogRequest request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<ProfileView>> Handle(EpalsByServiceTypeCatalogRequest request, CancellationToken cancellationToken)
     {
         var query = context.Users
             .Where(x => x.ProfileType == ProfileType.Epal);
@@ -20,13 +21,16 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByServiceTyp
             query = query.Where(x => x.Services.Any(x => x.ServiceTypeId == request.ServiceTypeId));
 
         query = ApplySorting(query, request.Sort);
+
+        var total = await query.CountAsync(cancellationToken: cancellationToken);
         
         var profiles = await query
+            .Skip(request.Skip)
             .Take(request.Take)
             .Select(x => new ProfileView(x.Id, x.Username!, x.Bio, x.Avatar))
             .ToArrayAsync(cancellationToken);
         
-        return profiles;
+        return PaginatedResult<ProfileView>.Create(profiles, request.Take, request.Skip, total);
     }
 
     private static IQueryable<Profile> ApplySorting(IQueryable<Profile> query, SortingType? sortingType)

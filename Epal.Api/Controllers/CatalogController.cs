@@ -1,4 +1,5 @@
 using Epal.Api.Controllers.Base;
+using Epal.Application.Common;
 using Epal.Application.Features.Admin.Users.Get;
 using Epal.Application.Features.Catalog.Profiles.Get;
 using Epal.Application.Features.Catalog.Profiles.Models;
@@ -16,6 +17,6 @@ public class CatalogController(ISender sender) : RestController(sender)
         => await Sender.Send(new ServiceTypesCatalogRequest(take));
     
     [HttpGet("epals")]
-    public async Task<IEnumerable<ProfileView>> GetEpalProfiles(Guid? serviceTypeId, int take = 20, SortingType sort = SortingType.None)
-        => await Sender.Send(new EpalsByServiceTypeCatalogRequest(serviceTypeId, sort, take));
+    public async Task<PaginatedResult<ProfileView>> GetEpalProfiles(Guid? serviceTypeId, int take = 20, int skip = 0, SortingType sort = SortingType.None)
+        => await Sender.Send(new EpalsByServiceTypeCatalogRequest(serviceTypeId, sort, take, skip));
 }
