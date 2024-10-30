@@ -2,6 +2,7 @@
 using Epal.Application.Common;
 using Epal.Application.Features.Services.AddOrUpdate;
 using Epal.Application.Features.Services.AddOrUpdate.Models;
+using Epal.Application.Features.Services.ById;
 using Epal.Application.Features.Services.Get;
 using Epal.Application.Features.Services.Get.Models;
 using Epal.Application.Features.Services.GetTypes;
@@ -21,6 +22,10 @@ public class ServicesController(ISender sender) : RestController(sender)
     [HttpGet("{profileId:guid}/category/{categoryId:guid}")]
     public async Task<Result<IEnumerable<ServiceListView>>> Get([FromRoute(Name = "profileId")] Guid profileId, [FromRoute(Name = "categoryId")] Guid categoryId)
         => await Sender.Send(new GetServicesRequest(profileId, categoryId));
+    
+    [HttpGet("category/{categoryId:guid}")]
+    public async Task<Result<ServiceTypeListView>> Get([FromRoute(Name = "categoryId")] Guid categoryId)
+        => await Sender.Send(new GetServiceTypeById(categoryId));
 
     [HttpPost, Authorize]
     public async Task<Result> AddOrUpdate(ServiceDto serviceDto)

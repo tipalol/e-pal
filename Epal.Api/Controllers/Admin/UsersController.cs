@@ -13,7 +13,7 @@ namespace Epal.Api.Controllers.Admin;
 /// <summary>
 /// Админ контроллер для управления пользователями
 /// </summary>
-[Authorize]
+//[Authorize]
 public class UsersController(ISender sender) : RestController(sender)
 {
     /// <summary>

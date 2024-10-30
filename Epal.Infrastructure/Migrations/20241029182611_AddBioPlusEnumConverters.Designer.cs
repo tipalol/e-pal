@@ -3,6 +3,7 @@ using System;
 using Epal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    partial class EpalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241029182611_AddBioPlusEnumConverters")]
+    partial class AddBioPlusEnumConverters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +77,7 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<string>("Bio")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("Created")

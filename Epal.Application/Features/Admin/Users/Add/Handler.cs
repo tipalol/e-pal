@@ -13,13 +13,10 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
     public async Task<Profile> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
         var passwordHash = passwordService.HashPassword(request.Password);
-        var user = new Profile
-        {
-            Email = request.Email, 
-            Username = request.Username,
-            PasswordHash = passwordHash, 
-            ProfileType = request.Type
-        };
+
+        var user = Profile.Create(request.Email, passwordHash);
+        user.Username = request.Username;
+        user.ProfileType = request.Type;
 
         await context.Users.AddAsync(user, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
