@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Services.GetCategories;
 
-public record GetServiceTypesRequest(Guid ProfileId) : IRequest<Result<IEnumerable<CategoryListView>>>;
+public record GetCategoriesRequest(Guid ProfileId) : IRequest<Result<IEnumerable<CategoryListView>>>;
 
-internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetServiceTypesRequest, Result<IEnumerable<CategoryListView>>>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetCategoriesRequest, Result<IEnumerable<CategoryListView>>>
 {
-    public async Task<Result<IEnumerable<CategoryListView>>> Handle(GetServiceTypesRequest request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<CategoryListView>>> Handle(GetCategoriesRequest request, CancellationToken cancellationToken)
     {
         var profile = await context.Users
             .Include(x => x.Services)

@@ -17,15 +17,15 @@ public class ServicesController(ISender sender) : RestController(sender)
 {
     [HttpGet("{profileId:guid}/categories")]
     public async Task<Result<IEnumerable<CategoryListView>>> GetTypes([FromRoute(Name = "profileId")] Guid profileId)
-        => await Sender.Send(new GetServiceTypesRequest(profileId));
+        => await Sender.Send(new GetCategoriesRequest(profileId));
 
     [HttpGet("{profileId:guid}/category/{categoryId:guid}")]
     public async Task<Result<IEnumerable<ServiceListView>>> Get([FromRoute(Name = "profileId")] Guid profileId, [FromRoute(Name = "categoryId")] Guid categoryId)
         => await Sender.Send(new GetServicesRequest(profileId, categoryId));
-    
+
     [HttpGet("category/{categoryId:guid}")]
     public async Task<Result<CategoryListView>> Get([FromRoute(Name = "categoryId")] Guid categoryId)
-        => await Sender.Send(new GetServiceTypeById(categoryId));
+        => await Sender.Send(new GetCategoryById(categoryId));
 
     [HttpPost, Authorize]
     public async Task<Result> AddOrUpdate(ServiceDto serviceDto)
