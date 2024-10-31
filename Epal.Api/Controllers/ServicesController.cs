@@ -16,7 +16,7 @@ namespace Epal.Api.Controllers;
 public class ServicesController(ISender sender) : RestController(sender)
 {
     [HttpGet("{profileId:guid}/categories")]
-    public async Task<Result<IEnumerable<CategoryListView>>> GetTypes([FromRoute(Name = "profileId")] Guid profileId)
+    public async Task<Result<IEnumerable<CategoryListViewWithPrice>>> GetTypes([FromRoute(Name = "profileId")] Guid profileId)
         => await Sender.Send(new GetCategoriesRequest(profileId));
 
     [HttpGet("{profileId:guid}/category/{categoryId:guid}")]

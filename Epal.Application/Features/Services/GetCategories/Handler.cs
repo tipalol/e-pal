@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Services.GetCategories;
 
-public record GetCategoriesRequest(Guid ProfileId) : IRequest<Result<IEnumerable<CategoryListView>>>;
+public record GetCategoriesRequest(Guid ProfileId) : IRequest<Result<IEnumerable<CategoryListViewWithPrice>>>;
 
-internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetCategoriesRequest, Result<IEnumerable<CategoryListView>>>
+internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetCategoriesRequest, Result<IEnumerable<CategoryListViewWithPrice>>>
 {
-    public async Task<Result<IEnumerable<CategoryListView>>> Handle(GetCategoriesRequest request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<CategoryListViewWithPrice>>> Handle(GetCategoriesRequest request, CancellationToken cancellationToken)
     {
         var profile = await context.Users
             .Include(x => x.Services)
@@ -18,13 +18,18 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetCateg
             .SingleOrDefaultAsync(x => x.Id == request.ProfileId, cancellationToken);
 
         if (profile == null)
-            return Result<IEnumerable<CategoryListView>>.Fail("User not found");
+            return Result<IEnumerable<CategoryListViewWithPrice>>.Fail("User not found");
 
         var serviceTypes = profile.Services
-            .Select(x => new CategoryListView(x.Category.Id, x.Category.Name, x.Category.Avatar))
-            .DistinctBy(x => x.Id)
-            .ToArray();
+            .GroupBy(x => x.Category.Id) // Сгруппируйте сервисы по CategoryId
+            .Select(group => new CategoryListViewWithPrice(
+                group.Key, // Id категории
+                group.First().Category.Name, // Имя категории
+                group.First().Category.Avatar, // Аватар категории
+                group.Min(s => s.Price) // Минимальная цена для этой категории
+            ))
+            .ToArray(); 
 
-        return Result<IEnumerable<CategoryListView>>.Ok(serviceTypes);
+        return Result<IEnumerable<CategoryListViewWithPrice>>.Ok(serviceTypes);
     }
 }
