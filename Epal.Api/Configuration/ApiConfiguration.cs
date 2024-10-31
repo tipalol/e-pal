@@ -23,15 +23,20 @@ public static class ApiConfiguration
         });
 
         services.ConfigureAuthentication();
-        
+
         services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
-        
+
         services.AddEndpointsApiExplorer();
         services.ConfigureSwagger();
-        
+
+        services.AddSignalR(options =>
+        {
+            options.EnableDetailedErrors = true;
+        });
+
         return services;
     }
 
@@ -63,13 +68,13 @@ public static class ApiConfiguration
                     []
                 }
             });
-    
+
             // using System.Reflection;
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
     }
-    
+
     private static IServiceCollection ConfigureAuthentication(this IServiceCollection services)
     {
         services.AddAuthorization();
