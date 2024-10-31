@@ -17,7 +17,7 @@ public static class AppConfiguration
         app.UseHttpsRedirection();
 
         app.UseRouting();
-        app.MapHub<EpalHub>("/status");
+        app.MapHub<EpalHub>("/socket");
 
         app.UseCors("AllowAll");
         app.MapControllers();
