@@ -11,6 +11,6 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUsers
 {
     public async Task<IEnumerable<Domain.Entities.Profile>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
-        return await context.Users.ToListAsync(cancellationToken);
+        return await context.Profiles.ToListAsync(cancellationToken);
     }
 }

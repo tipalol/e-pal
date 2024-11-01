@@ -14,7 +14,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
     [HttpGet("profiles")]
     public async Task SeedProfiles(int count)
     {
-        var profiles = context.Users;
+        var profiles = context.Profiles;
         var random = new Random();
 
         for (var i = 0; i < count; i++)

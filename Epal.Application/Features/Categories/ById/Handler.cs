@@ -1,10 +1,10 @@
 using Epal.Application.Common;
-using Epal.Application.Features.Services.GetCategories.Models;
+using Epal.Application.Features.Categories.Models;
 using Epal.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Epal.Application.Features.Services.ById;
+namespace Epal.Application.Features.Categories.ById;
 
 public record GetCategoryById(Guid ServiceTypeId) : IRequest<Result<CategoryListView>>;
 

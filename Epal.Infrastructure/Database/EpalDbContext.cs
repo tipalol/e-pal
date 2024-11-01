@@ -8,8 +8,9 @@ namespace Epal.Infrastructure.Database;
 
 public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(options), IEpalDbContext
 {
-    public DbSet<Profile> Users { get; private  set; }
+    public DbSet<Profile> Profiles { get; private  set; }
     public DbSet<Service> Services { get; private  set;}
+    public DbSet<ServiceOption> ServiceOptions { get; }
     public DbSet<Category> Categories { get; private set; }
     public DbSet<Order> Orders { get; private set; }
 

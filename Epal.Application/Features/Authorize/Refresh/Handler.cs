@@ -12,7 +12,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService, 
     public async Task<string> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         var userId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users
+        var profile = await context.Profiles
             .SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
 
         if (profile is null)

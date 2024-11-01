@@ -13,7 +13,7 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCa
 {
     public async Task<PaginatedResult<ProfileView>> Handle(EpalsByCategoryCatalogRequest request, CancellationToken cancellationToken)
     {
-        var query = context.Users
+        var query = context.Profiles
             .Where(x => x.ProfileType == ProfileType.Epal);
 
         if (request.ServiceTypeId.HasValue)

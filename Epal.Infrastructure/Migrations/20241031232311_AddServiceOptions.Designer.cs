@@ -3,6 +3,7 @@ using System;
 using Epal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Epal.Infrastructure.Migrations
 {
     [DbContext(typeof(EpalDbContext))]
-    partial class EpalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241031232311_AddServiceOptions")]
+    partial class AddServiceOptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ServiceOptionId")
+                    b.Property<Guid>("ServiceId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -78,7 +81,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.HasIndex("ServiceOptionId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Orders");
                 });
@@ -152,20 +155,22 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Avatar")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<string>("Icon")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
@@ -205,7 +210,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceOptions");
+                    b.ToTable("ServiceOption");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
@@ -222,9 +227,9 @@ namespace Epal.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Epal.Domain.Entities.ServiceOption", "ServiceOption")
+                    b.HasOne("Epal.Domain.Entities.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceOptionId")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -232,7 +237,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.Navigation("Seller");
 
-                    b.Navigation("ServiceOption");
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Service", b =>

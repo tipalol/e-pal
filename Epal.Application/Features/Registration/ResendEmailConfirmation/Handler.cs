@@ -10,7 +10,7 @@ public class Handler(IEpalDbContext context, IVerificationService verificationSe
 {
     public async Task Handle(ResendEmailConfirmationRequest request, CancellationToken cancellationToken)
     {
-        var userExists = await context.Users
+        var userExists = await context.Profiles
             .AnyAsync(x => x.Email == request.Email, cancellationToken);
         
         if (!userExists)
