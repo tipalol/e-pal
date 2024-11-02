@@ -28,6 +28,10 @@ public class OrdersController(ISender sender) : RestController(sender)
     public async Task<IEnumerable<OrderDto>> GetAll(OrderStatus statusFilter, OrderType typeFilter)
         => await Sender.Send(new GetOrdersRequest(statusFilter, typeFilter));
 
+    /// <summary>
+    /// Получить заказ по айди
+    /// </summary>
+    /// <param name="orderId">Идентификатор заказа</param>
     [HttpGet("{orderId:guid}")]
     public async Task Get([FromRoute(Name = "orderId")] Guid orderId)
         => await Sender.Send(new GetOrderDetailsRequest(orderId));
