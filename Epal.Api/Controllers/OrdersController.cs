@@ -18,6 +18,12 @@ namespace Epal.Api.Controllers;
 [Authorize]
 public class OrdersController(ISender sender) : RestController(sender)
 {
+    /// <summary>
+    /// Получить все заказы для текущего пользователя
+    /// </summary>
+    /// <param name="statusFilter">Фильтр по статусам заказа</param>
+    /// <param name="typeFilter">Фильтр по типу заказа: приходящий/исходящий</param>
+    /// <returns>Список заказов</returns>
     [HttpGet]
     public async Task<IEnumerable<OrderDto>> GetAll(OrderStatus statusFilter, OrderType typeFilter)
         => await Sender.Send(new GetOrdersRequest(statusFilter, typeFilter));
