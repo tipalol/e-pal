@@ -13,7 +13,7 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
     public async Task<IEnumerable<OrderDto>> Handle(GetOrdersRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users
+        var profile = await context.Profiles
             .SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
 
         if (profile is null)
@@ -31,7 +31,7 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
 
         var orders = await query
             .OrderByDescending(x => x.Created)
-            .Select(x => new OrderDto(x.Id, x.Status, x.Service.Name))
+            .Select(x => new OrderDto(x.Id, x.Status, x.ServiceOption.Name))
             .ToArrayAsync(cancellationToken);
 
         return orders;

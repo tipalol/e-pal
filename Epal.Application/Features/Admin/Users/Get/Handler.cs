@@ -11,7 +11,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetUserR
 {
     public async Task<Domain.Entities.Profile> Handle(GetUserRequest request, CancellationToken cancellationToken)
     {
-        var user = context.Users.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var user = context.Profiles.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         return await user ?? throw new ArgumentException($"Пользователь с ID {request.Id} не найден");
     }
 }

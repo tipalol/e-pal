@@ -14,12 +14,12 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
     public async Task<Result<ProfileResponse>> Handle(UpdateProfileRequest updateProfileRequest, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users.SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
+        var profile = await context.Profiles.SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
         
         if (profile is null) 
             return Result<ProfileResponse>.Fail("Profile not found");
         
-        var newUsernameExisted = await context.Users
+        var newUsernameExisted = await context.Profiles
             .AnyAsync(x => x.Username == updateProfileRequest.ProfileModel.Username, cancellationToken);
         
         // TODO

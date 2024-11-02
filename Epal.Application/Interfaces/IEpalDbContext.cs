@@ -5,8 +5,9 @@ namespace Epal.Application.Interfaces;
 
 public interface IEpalDbContext
 {
-    public DbSet<Profile> Users { get; }
+    public DbSet<Profile> Profiles { get; }
     public DbSet<Service> Services { get; }
+    public DbSet<ServiceOption> ServiceOptions { get; }
     public DbSet<Category> Categories { get; }
     public DbSet<Order> Orders { get; }
 

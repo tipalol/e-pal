@@ -12,7 +12,7 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
     public async Task<OrderDetails> Handle(GetOrderDetailsRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users
+        var profile = await context.Profiles
             .SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
 
         if (profile is null)
@@ -24,7 +24,7 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
             .Select(x => new OrderDetails(
                 x.Id, x.Status, x.Created.ToString("dd.MM.yyyy"),
                 new OrderSellerView(x.Seller.Id, x.Seller.Username!, ""),
-                new OrderServiceView(x.Service.Id, x.Service.Name))
+                new OrderServiceView(x.ServiceOption.Id, x.ServiceOption.Name))
             )
             .SingleOrDefaultAsync(cancellationToken);
 

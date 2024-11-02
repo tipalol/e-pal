@@ -11,7 +11,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<ProfileR
 {
     public async Task<Result<ProfileResponse>> Handle(ProfileRequest request, CancellationToken cancellationToken)
     {
-        var profile = await context.Users
+        var profile = await context.Profiles
             .Where(x => x.Username == request.Username)
             .Select(x => ProfileResponse.FromProfile(x))
             .SingleOrDefaultAsync(cancellationToken);

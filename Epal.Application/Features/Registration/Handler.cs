@@ -12,7 +12,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
 {
     public async Task<string> Handle(RegistrationRequest request, CancellationToken cancellationToken)
     {
-        var userExists = await context.Users
+        var userExists = await context.Profiles
             .AnyAsync(x => x.Email == request.Email, cancellationToken);
 
         if (userExists)
@@ -26,13 +26,13 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         var user = Profile.Create(request.Email, passwordHash);
 
         var username = Math.Abs(user.Id.GetHashCode() % 10000000).ToString();
-        if (await context.Users.AnyAsync(x => x.Username == username, cancellationToken))
+        if (await context.Profiles.AnyAsync(x => x.Username == username, cancellationToken))
         {
             username = Math.Abs(user.Id.GetHashCode() % 10123321).ToString();
         }
         user.Username = username;
 
-        await context.Users.AddAsync(user, cancellationToken);
+        await context.Profiles.AddAsync(user, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
         var token = await sender.Send(new TokenRequest(user.Id, user.Email, user.Username), cancellationToken);

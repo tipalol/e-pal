@@ -1,3 +1,4 @@
+using Epal.Api.Hubs;
 using Epal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,18 +15,21 @@ public static class AppConfiguration
         }
 
         app.UseHttpsRedirection();
+
         app.UseRouting();
-        app.UseCors("AllowAll"); 
+        app.MapHub<EpalHub>("/socket");
+
+        app.UseCors("AllowAll");
         app.MapControllers();
-        
+
         app.UseAuthentication();
         app.UseAuthorization();
-        
+
         MigrateDbContext(app);
-        
+
         return app;
     }
-    
+
     private static void MigrateDbContext(IHost app)
     {
         using var scope = app.Services.CreateScope();

@@ -6,26 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Orders.Add;
 
-public record AddOrderRequest(Guid ServiceId) : IRequest;
+public record AddOrderRequest(Guid ServiceOptionId) : IRequest;
 
 public class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<AddOrderRequest>
 {
     public async Task Handle(AddOrderRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users
+        var profile = await context.Profiles
             .SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
 
         if (profile is null)
             throw new ArgumentException("User not found");
 
-        var serviceInfo = await context.Services
-            .Where(x => x.Id == request.ServiceId)
-            .Select(x => new { SellerId = x.ProfileId, Total = x.Price })
+        var serviceInfo = await context.ServiceOptions
+            .Where(x => x.Id == request.ServiceOptionId)
+            .Select(x => new { SellerId = x.Service.ProfileId, Total = x.Price })
             .SingleOrDefaultAsync(cancellationToken);
 
         if (serviceInfo is null)
-            throw new ArgumentException("Service not found");
+            throw new ArgumentException("Service option not found");
 
         var order = new Order
         {
@@ -33,7 +33,7 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
             SellerId = serviceInfo.SellerId,
             BuyerId = profileId,
             Total = serviceInfo.Total,
-            ServiceId = request.ServiceId
+            ServiceOptionId = request.ServiceOptionId
         };
 
         await context.Orders.AddAsync(order, cancellationToken);

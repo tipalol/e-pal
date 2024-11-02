@@ -1,4 +1,5 @@
 ﻿using Epal.Application.Common;
+using Epal.Application.Features.ServiceOptions.AddOrUpdate.Models;
 using Epal.Application.Features.Services.AddOrUpdate.Models;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
@@ -14,18 +15,18 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
     public async Task<Result> Handle(CreateOrUpdateServiceRequest request, CancellationToken cancellationToken)
     {
         var profileId = userService.AuthenticatedUser.Id;
-        var profile = await context.Users
+        var profile = await context.Profiles
             .SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
 
         if (profile == null)
             return Result.Fail("User not found");
 
         var serviceDto = request.ServiceDto;
-        var serviceType = await context.Categories
-            .SingleOrDefaultAsync(x => x.Id == serviceDto.ServiceTypeId, cancellationToken);
+        var category = await context.Categories
+            .SingleOrDefaultAsync(x => x.Id == serviceDto.CategoryId, cancellationToken);
 
-        if (serviceType == null)
-            return Result.Fail("Service type not found");
+        if (category == null)
+            return Result.Fail("Category not found");
 
         if (serviceDto.Id.HasValue)
         {
@@ -37,9 +38,8 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 
             dbService.Name = serviceDto.Name;
             dbService.Description = serviceDto.Description;
-            dbService.Price = serviceDto.Price;
-            dbService.CategoryId = serviceDto.ServiceTypeId;
-            dbService.Avatar = serviceDto.Avatar;
+            dbService.CategoryId = serviceDto.CategoryId;
+            dbService.Tags = serviceDto.Tags;
 
             await context.SaveChangesAsync(cancellationToken);
 
@@ -49,12 +49,10 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         var service = new Service
         {
             Name = serviceDto.Name,
+            CategoryId = category.Id,
             Description = serviceDto.Description,
-            Avatar = serviceDto.Avatar,
-            CategoryId = serviceType.Id,
-            ProfileId = profile.Id,
-            Price = serviceDto.Price,
-            Icon = " "
+            Tags = serviceDto.Tags,
+            ProfileId = profileId
         };
 
         await context.Services.AddAsync(service, cancellationToken);

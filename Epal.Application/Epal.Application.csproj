@@ -23,6 +23,8 @@
     <ItemGroup>
       <Folder Include="Features\Admin\ServiceTypes\" />
       <Folder Include="Features\Catalog\Categories\Get\Validation\" />
+      <Folder Include="Features\Categories\" />
+      <Folder Include="Features\ServiceOptions\" />
     </ItemGroup>
 
     <ItemGroup>

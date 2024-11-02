@@ -8,27 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Catalog.Profiles.Get;
 
-public record EpalsByServiceTypeCatalogRequest(Guid? ServiceTypeId, SortingType Sort, int Take = 20, int Skip = 0): IRequest<PaginatedResult<ProfileView>>;
-public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByServiceTypeCatalogRequest, PaginatedResult<ProfileView>>
+public record EpalsByCategoryCatalogRequest(Guid? CategoryId, SortingType Sort, int Take = 20, int Skip = 0): IRequest<PaginatedResult<ProfileView>>;
+public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCatalogRequest, PaginatedResult<ProfileView>>
 {
-    public async Task<PaginatedResult<ProfileView>> Handle(EpalsByServiceTypeCatalogRequest request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<ProfileView>> Handle(EpalsByCategoryCatalogRequest request, CancellationToken cancellationToken)
     {
-        var query = context.Users
+        var query = context.Profiles
             .Where(x => x.ProfileType == ProfileType.Epal);
 
-        if (request.ServiceTypeId.HasValue)
-            query = query.Where(x => x.Services.Any(x => x.CategoryId == request.ServiceTypeId));
+        if (request.CategoryId.HasValue)
+            query = query.Where(x => x.Services.Any(x => x.CategoryId == request.CategoryId));
 
         query = ApplySorting(query, request.Sort);
 
         var total = await query.CountAsync(cancellationToken: cancellationToken);
-        
+
         var profiles = await query
             .Skip(request.Skip)
             .Take(request.Take)
             .Select(x => new ProfileView(x.Id, x.Username!, x.Bio, x.Avatar))
             .ToArrayAsync(cancellationToken);
-        
+
         return PaginatedResult<ProfileView>.Create(profiles, request.Take, request.Skip, total);
     }
 

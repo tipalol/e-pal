@@ -14,7 +14,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
     [HttpGet("profiles")]
     public async Task SeedProfiles(int count)
     {
-        var profiles = context.Users;
+        var profiles = context.Profiles;
         var random = new Random();
 
         for (var i = 0; i < count; i++)
@@ -31,7 +31,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
             {
                 Email = email,
                 PasswordHash = password,
-                Avatar = "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+                Avatar = GetRandomAvatar(),
                 Gender = epalStatusAcquiring.GetHashCode() % 2 == 0 ? Gender.Man : Gender.Woman,
                 Bio = bio,
                 Username = username,
@@ -57,6 +57,26 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
 
         await categories.AddRangeAsync(seedingData, CancellationToken.None);
         await context.SaveChangesAsync(CancellationToken.None);
+    }
+
+    private string GetRandomAvatar()
+    {
+        string[] avas = 
+        [
+            "https://global-oss.epal.gg/data/album/2417123/17261516225287562.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2355046/17074537203401147.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/1973170/17274126137486217.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2642061/17284976041004745.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2613296/17292476324542663.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2025331/17252414585028007.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2406626/17201037645068222.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2575850/17262816938092847.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/1347213/17263826337164772.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
+            "https://global-oss.epal.gg/data/cover/2428145/17110061433151276.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256"
+        ];
+
+        return avas[Random.Shared.Next(0, avas.Length)];
     }
 
     private string GenerateRandomString(int length, Random random)

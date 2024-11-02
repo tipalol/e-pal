@@ -19,9 +19,9 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         if (request.Login is null)
             throw new ArgumentException("Empty argument exception");
         if (request.Login.Contains('@'))
-            user = await context.Users.FirstOrDefaultAsync(x => x.Email == request.Login, cancellationToken);
+            user = await context.Profiles.FirstOrDefaultAsync(x => x.Email == request.Login, cancellationToken);
         else
-            user = await context.Users.FirstOrDefaultAsync(x => x.Username == request.Login, cancellationToken);
+            user = await context.Profiles.FirstOrDefaultAsync(x => x.Username == request.Login, cancellationToken);
 
         if (user is null)
             throw new ArgumentException("Пользователь не найден");

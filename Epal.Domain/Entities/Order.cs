@@ -8,8 +8,8 @@ public class Order : DateTrackedEntity
     public double Total { get; set; }
     public OrderStatus Status { get; set; }
 
-    public Guid ServiceId { get; set; }
-    public Service Service { get; set; }
+    public Guid ServiceOptionId { get; set; }
+    public ServiceOption ServiceOption { get; set; }
 
     public Guid BuyerId { get; set; }
     public Profile Buyer { get; set; }

@@ -11,7 +11,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<StatusUs
 {
     public async Task<StatusResponse> Handle(StatusUserRequest request, CancellationToken cancellationToken)
     {
-        var exists = await context.Users
+        var exists = await context.Profiles
             .Where(x => x.Email == request.Email)
             .Select(x => new StatusResponse(true, x.Status))
             .SingleOrDefaultAsync(cancellationToken);

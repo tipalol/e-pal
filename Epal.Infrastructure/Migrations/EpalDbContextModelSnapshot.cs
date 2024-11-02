@@ -60,7 +60,7 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ServiceId")
+                    b.Property<Guid>("ServiceOptionId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -78,7 +78,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ServiceOptionId");
 
                     b.ToTable("Orders");
                 });
@@ -142,7 +142,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("Users");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
@@ -152,18 +152,43 @@ namespace Epal.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Icon")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.ServiceOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -173,16 +198,14 @@ namespace Epal.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid>("ServiceId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ServiceId");
 
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("Services");
+                    b.ToTable("ServiceOptions");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Order", b =>
@@ -199,9 +222,9 @@ namespace Epal.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Epal.Domain.Entities.Service", "Service")
+                    b.HasOne("Epal.Domain.Entities.ServiceOption", "ServiceOption")
                         .WithMany()
-                        .HasForeignKey("ServiceId")
+                        .HasForeignKey("ServiceOptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -209,7 +232,7 @@ namespace Epal.Infrastructure.Migrations
 
                     b.Navigation("Seller");
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceOption");
                 });
 
             modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
@@ -231,6 +254,17 @@ namespace Epal.Infrastructure.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Epal.Domain.Entities.ServiceOption", b =>
+                {
+                    b.HasOne("Epal.Domain.Entities.Service", "Service")
+                        .WithMany("ServiceOptions")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Epal.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Services");
@@ -243,6 +277,11 @@ namespace Epal.Infrastructure.Migrations
                     b.Navigation("Services");
 
                     b.Navigation("SoldOrders");
+                });
+
+            modelBuilder.Entity("Epal.Domain.Entities.Service", b =>
+                {
+                    b.Navigation("ServiceOptions");
                 });
 #pragma warning restore 612, 618
         }

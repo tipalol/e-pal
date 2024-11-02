@@ -20,7 +20,7 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
         user.Bio = request.Bio;
         user.Languages = request.languages;
 
-        await context.Users.AddAsync(user, cancellationToken);
+        await context.Profiles.AddAsync(user, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         
         return user;

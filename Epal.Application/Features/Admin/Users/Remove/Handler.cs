@@ -9,12 +9,12 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<RemoveUs
 {
     public async Task Handle(RemoveUserRequest request, CancellationToken cancellationToken)
     {
-        var user = await context.Users.FindAsync(request.Id);
+        var user = await context.Profiles.FindAsync(request.Id);
         if (user == null)
         {
             throw new ArgumentException($"Пользователь с ID {request.Id} не найден");
         }
-        context.Users.Remove(user);
+        context.Profiles.Remove(user);
         await context.SaveChangesAsync(cancellationToken);
     }
 }
