@@ -84,7 +84,7 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
         return new ServiceOption()
         {
             Description = GenerateRandomBio(new Random()),
-            Name = serviceOptionsNames[Random.Shared.Next(0, 7)],
+            Name = serviceOptionsNames[Random.Shared.Next(0, 9)],
             Price = Math.Abs(Random.Shared.Next(0, 99).GetHashCode()) % 10,
         };
     }
