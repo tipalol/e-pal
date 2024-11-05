@@ -1,4 +1,5 @@
 ﻿using System.Security;
+using Epal.Application.Features.Authorize.Models;
 using Epal.Application.Features.Authorize.Token;
 using Epal.Application.Interfaces;
 using Epal.Domain.Entities;
@@ -8,14 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
 
 namespace Epal.Application.Features.Authorize;
-public record AuthorizeRequest(string Login, string Password) : IRequest<string>;
+public record AuthorizeRequest(string Login, string Password) : IRequest<AuthorizeResponse>;
 
-internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService, ISender sender) : IRequestHandler<AuthorizeRequest, string>
+internal sealed class Handler(IEpalDbContext context, IPasswordService passwordService, ISender sender) : IRequestHandler<AuthorizeRequest, AuthorizeResponse>
 {
-    public async Task<string> Handle(AuthorizeRequest request, CancellationToken cancellationToken)
+    public async Task<AuthorizeResponse> Handle(AuthorizeRequest request, CancellationToken cancellationToken)
     {
         var passwordHash = passwordService.HashPassword(request.Password);
+        
         Profile? user;
+        
         if (request.Login is null)
             throw new ArgumentException("Empty argument exception");
         if (request.Login.Contains('@'))
@@ -32,6 +35,6 @@ internal sealed class Handler(IEpalDbContext context, IPasswordService passwordS
 
         var token = await sender.Send(new TokenRequest(user.Id, user.Email, user.Username), cancellationToken);
 
-        return token;
+        return new AuthorizeResponse(user.Username, token);
     }
 }
