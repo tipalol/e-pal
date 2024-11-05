@@ -31,8 +31,13 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
 
         var orders = await query
             .OrderByDescending(x => x.Created)
-            .Select(x => new OrderDto(x.Id, x.Status, x.ServiceOption.Name))
+            .Select(x => 
+                new OrderDto(x.Id, x.Status, x.Created.ToString("dd.MM.yyyy"), 1, x.Total,
+                    new OrderServiceView(x.ServiceOption.Id, x.ServiceOption.Name, x.ServiceOption.Service.Avatar), 
+                    new OrderSellerView(x.Seller.Id, x.Seller.Username, x.Seller.Avatar)))
             .ToArrayAsync(cancellationToken);
+        
+        Console.WriteLine(request.StatusFilter + " " + request.OrderType);
 
         return orders;
     }

@@ -25,7 +25,7 @@ public class OrdersController(ISender sender) : RestController(sender)
     /// <param name="typeFilter">Фильтр по типу заказа: приходящий/исходящий</param>
     /// <returns>Список заказов</returns>
     [HttpGet]
-    public async Task<IEnumerable<OrderDto>> GetAll(OrderStatus statusFilter, OrderType typeFilter)
+    public async Task<IEnumerable<OrderDto>> GetAll(OrderStatus statusFilter = OrderStatus.Created, OrderType typeFilter = OrderType.Buy)
         => await Sender.Send(new GetOrdersRequest(statusFilter, typeFilter));
 
     /// <summary>
