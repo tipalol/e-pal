@@ -45,7 +45,6 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             return Result.Ok();
         }
 
-        // TODO exception
         var serviceOption = new ServiceOption
         {
             Name = serviceDto.Name,

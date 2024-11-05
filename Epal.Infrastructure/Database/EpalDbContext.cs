@@ -10,7 +10,7 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
 {
     public DbSet<Profile> Profiles { get; private  set; }
     public DbSet<Service> Services { get; private  set;}
-    public DbSet<ServiceOption> ServiceOptions { get; }
+    public DbSet<ServiceOption> ServiceOptions { get; private set; }
     public DbSet<Category> Categories { get; private set; }
     public DbSet<Order> Orders { get; private set; }
 
