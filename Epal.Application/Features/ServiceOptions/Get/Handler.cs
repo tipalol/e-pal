@@ -26,7 +26,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetServi
             return Result<IEnumerable<ServiceOptionListView>>.Fail("Category not found");
 
         var services = service.ServiceOptions
-            .Select(x => new ServiceOptionListView(x.Id, x.Name, x.Price, service.Id))
+            .Select(x => new ServiceOptionListView(x.Id, x.Name, x.Description, x.Price, service.Id))
             .ToArray();
 
         return Result<IEnumerable<ServiceOptionListView>>.Ok(services);
