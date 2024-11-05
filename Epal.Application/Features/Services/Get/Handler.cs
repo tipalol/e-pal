@@ -22,7 +22,7 @@ internal sealed class Handler(IEpalDbContext context) : IRequestHandler<GetServi
 
         var services = profile.Services
             .Where(x => x.ServiceOptions.Count != 0)
-            .Select(x => new ServiceListView(x.Id, x.Name, x.ServiceOptions.Min(x => x.Price), x.Icon, x.CategoryId))
+            .Select(x => new ServiceListView(x.Id, x.Name, x.ServiceOptions.Min(x => x.Price), x.Icon, x.Description, x.CategoryId))
             .ToArray();
 
         return Result<IEnumerable<ServiceListView>>.Ok(services);
