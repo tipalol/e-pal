@@ -4,6 +4,7 @@ using Epal.Application.Features.Orders.Approve;
 using Epal.Application.Features.Orders.Cancel;
 using Epal.Application.Features.Orders.Complete;
 using Epal.Application.Features.Orders.Details;
+using Epal.Application.Features.Orders.Details.Models;
 using Epal.Application.Features.Orders.Dispute;
 using Epal.Application.Features.Orders.Get;
 using Epal.Application.Features.Orders.Get.Models;
@@ -33,7 +34,7 @@ public class OrdersController(ISender sender) : RestController(sender)
     /// </summary>
     /// <param name="orderId">Идентификатор заказа</param>
     [HttpGet("{orderId:guid}")]
-    public async Task Get([FromRoute(Name = "orderId")] Guid orderId)
+    public async Task<OrderDetails> Get([FromRoute(Name = "orderId")] Guid orderId)
         => await Sender.Send(new GetOrderDetailsRequest(orderId));
 
     [HttpPost]
