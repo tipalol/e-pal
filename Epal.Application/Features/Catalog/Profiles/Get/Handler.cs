@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Application.Features.Catalog.Profiles.Get;
 
-public record EpalsByCategoryCatalogRequest(Guid? ServiceTypeId, SortingType Sort, int Take = 20, int Skip = 0): IRequest<PaginatedResult<ProfileView>>;
+public record EpalsByCategoryCatalogRequest(Guid? CategoryId, SortingType Sort, int Take = 20, int Skip = 0): IRequest<PaginatedResult<ProfileView>>;
 public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCatalogRequest, PaginatedResult<ProfileView>>
 {
     public async Task<PaginatedResult<ProfileView>> Handle(EpalsByCategoryCatalogRequest request, CancellationToken cancellationToken)
@@ -16,8 +16,8 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCa
         var query = context.Profiles
             .Where(x => x.ProfileType == ProfileType.Epal);
 
-        if (request.ServiceTypeId.HasValue)
-            query = query.Where(x => x.Services.Any(x => x.CategoryId == request.ServiceTypeId));
+        if (request.CategoryId.HasValue)
+            query = query.Where(x => x.Services.Any(x => x.CategoryId == request.CategoryId));
 
         query = ApplySorting(query, request.Sort);
 

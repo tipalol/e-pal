@@ -20,25 +20,25 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         if (profile == null)
             return Result.Fail("User not found");
 
-        var serviceDto = request.ServiceOptionDto;
+        var serviceOptionDto = request.ServiceOptionDto;
         var service = await context.Services
-            .SingleOrDefaultAsync(x => x.Id == serviceDto.ServiceId, cancellationToken);
+            .SingleOrDefaultAsync(x => x.Id == serviceOptionDto.ServiceId, cancellationToken);
 
         if (service == null)
             return Result.Fail("Service not found");
 
-        if (serviceDto.Id.HasValue)
+        if (serviceOptionDto.Id.HasValue)
         {
             var dbServiceOption = await context.ServiceOptions
-                .SingleOrDefaultAsync(x => x.Id == serviceDto.Id.Value, cancellationToken);
+                .SingleOrDefaultAsync(x => x.Id == serviceOptionDto.Id.Value, cancellationToken);
 
             if (dbServiceOption == null)
                 return Result.Fail("Service option not found");
 
-            dbServiceOption.Name = serviceDto.Name;
-            dbServiceOption.Price = serviceDto.Price;
-            dbServiceOption.ServiceId = serviceDto.ServiceId;
-            dbServiceOption.Description = serviceDto.Description;
+            dbServiceOption.Name = serviceOptionDto.Name;
+            dbServiceOption.Price = serviceOptionDto.Price;
+            dbServiceOption.ServiceId = serviceOptionDto.ServiceId;
+            dbServiceOption.Description = serviceOptionDto.Description;
 
             await context.SaveChangesAsync(cancellationToken);
 
@@ -47,10 +47,10 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 
         var serviceOption = new ServiceOption
         {
-            Name = serviceDto.Name,
+            Name = serviceOptionDto.Name,
             ServiceId = service.Id,
-            Price = serviceDto.Price,
-            Description = serviceDto.Description
+            Price = serviceOptionDto.Price,
+            Description = serviceOptionDto.Description
         };
 
         await context.ServiceOptions.AddAsync(serviceOption, cancellationToken);

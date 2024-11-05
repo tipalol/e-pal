@@ -51,7 +51,8 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             Name = serviceDto.Name,
             CategoryId = category.Id,
             Description = serviceDto.Description,
-            Tags = serviceDto.Tags
+            Tags = serviceDto.Tags,
+            ProfileId = profileId
         };
 
         await context.Services.AddAsync(service, cancellationToken);

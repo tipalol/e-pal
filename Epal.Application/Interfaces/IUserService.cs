@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using Epal.Application.Common.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Epal.Application.Common.Models;
 
 namespace Epal.Application.Interfaces;
 

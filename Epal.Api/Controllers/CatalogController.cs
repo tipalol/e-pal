@@ -16,6 +16,6 @@ public class CatalogController(ISender sender) : RestController(sender)
         => await Sender.Send(new CategoriesCatalogRequest(take, skip));
 
     [HttpGet("epals")]
-    public async Task<PaginatedResult<ProfileView>> GetEpalProfiles(Guid? serviceTypeId, int take = 20, int skip = 0, SortingType sort = SortingType.None)
-        => await Sender.Send(new EpalsByCategoryCatalogRequest(serviceTypeId, sort, take, skip));
+    public async Task<PaginatedResult<ProfileView>> GetEpalProfiles(Guid? categoryId, int take = 20, int skip = 0, SortingType sort = SortingType.None)
+        => await Sender.Send(new EpalsByCategoryCatalogRequest(categoryId, sort, take, skip));
 }
