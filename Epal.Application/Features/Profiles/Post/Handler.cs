@@ -13,7 +13,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 {
     public async Task<Result<ProfileResponse>> Handle(UpdateProfileRequest updateProfileRequest, CancellationToken cancellationToken)
     {
-        var profileId = userService.AuthenticatedUser.Id;
+        var profileId = userService.AuthenticatedUser?.Id;
         var profile = await context.Profiles.SingleOrDefaultAsync(x => x.Id == profileId, cancellationToken);
         
         if (profile is null) 
@@ -37,6 +37,6 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         profile.Languages = updateProfileRequest.ProfileModel.Languages;
         await context.SaveChangesAsync(cancellationToken);
         
-        return Result<ProfileResponse>.Ok(ProfileResponse.FromProfile(profile));
+        return Result<ProfileResponse>.Ok(ProfileResponse.FromProfile(profile, profileId));
     }
 }

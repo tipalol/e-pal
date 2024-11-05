@@ -11,8 +11,9 @@ namespace Epal.Application.Features.Profiles.Models;
     public Gender Gender { get; set; }
     public string Avatar { get; set; }
     public string Languages { get; set; } = "РУССКИЙ";
+    public bool IsMyProfile { get; set; }
 
-    public static ProfileResponse FromProfile(Profile profile)
+    public static ProfileResponse FromProfile(Profile profile, Guid? askingId)
     {
         return new ProfileResponse
         {
@@ -21,7 +22,8 @@ namespace Epal.Application.Features.Profiles.Models;
             Status = profile.Status,
             Avatar = profile.Avatar,
             Languages = profile.Languages,
-            Gender = profile.Gender
+            Gender = profile.Gender,
+            IsMyProfile = askingId != null && profile.Id == askingId
         };
     }
 }

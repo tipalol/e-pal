@@ -8,7 +8,7 @@ namespace Epal.Application.Services;
 
 public class UserService(IHttpContextAccessor contextAccessor) : IUserService
 {
-    public AuthenticatedUser AuthenticatedUser => _authenticatedUser ??= Authenticate();
+    public AuthenticatedUser? AuthenticatedUser => _authenticatedUser ??= Authenticate();
     
     private AuthenticatedUser? _authenticatedUser;
 
@@ -17,14 +17,14 @@ public class UserService(IHttpContextAccessor contextAccessor) : IUserService
         var claims = CurrentUser?.Claims.ToArray();
 
         if (claims == null)
-            throw new Exception("Ошибка аутентификации пользователя");
+            return null;
 
         var id = claims.SingleOrDefault(x => x.Type == ClaimTypes.Sid)?.Value;
         var username = claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
         var email = claims.SingleOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
         if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email))
-            throw new Exception("Ошибка аутентификации пользователя");
+            return null;
         
         var authenticatedUser = new AuthenticatedUser(Guid.Parse(id), username, email);
         

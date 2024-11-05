@@ -12,10 +12,10 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 {
     public async Task<Result<ProfileResponse>> Handle(MyProfileRequest request, CancellationToken cancellationToken)
     {
-        var id = userService.AuthenticatedUser.Id;
+        var id = userService.AuthenticatedUser?.Id;
         var profile = await context.Profiles
             .Where(x => x.Id == id)
-            .Select(x => ProfileResponse.FromProfile(x))
+            .Select(x => ProfileResponse.FromProfile(x, id))
             .SingleOrDefaultAsync(cancellationToken);
         
         return profile is null ? 

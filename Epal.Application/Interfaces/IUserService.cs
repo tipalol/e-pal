@@ -4,5 +4,5 @@ namespace Epal.Application.Interfaces;
 
 public interface IUserService
 {
-    public AuthenticatedUser AuthenticatedUser { get; }
+    public AuthenticatedUser? AuthenticatedUser { get; }
 }
