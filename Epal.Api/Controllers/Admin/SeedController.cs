@@ -4,13 +4,14 @@ using Epal.Domain.Entities;
 using Epal.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Epal.Api.Controllers.Admin;
 
 public class SeedController(ISender _, IEpalDbContext context, IPasswordService passwordService) : RestController(_)
 {
     private static List<string> Names { get; set; } = [];
-    
+
     [HttpGet("profiles")]
     public async Task SeedProfiles(int count)
     {
@@ -59,9 +60,88 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
         await context.SaveChangesAsync(CancellationToken.None);
     }
 
+    [HttpGet("ServicesWithOptions")]
+    public async Task SeedServices()
+    {
+        await GetServicesWithOptions(context);
+    }
+
+
+    private ServiceOption GetRandomServiceOption()
+    {
+        string[] serviceOptionsNames =
+        [
+            "base",
+            "advanture",
+            "profi",
+            "extra",
+            "vip",
+            "noob",
+            "nya poka",
+            "помурчать в дискордике пока ты играешь",
+            "Try hard"
+        ];
+        return new ServiceOption()
+        {
+            Description = GenerateRandomBio(new Random()),
+            Name = serviceOptionsNames[Random.Shared.Next(0, 7)],
+            Price = Math.Abs(Random.Shared.Next(0, 99).GetHashCode()) % 10,
+        };
+    }
+
+    private async Task GetServicesWithOptions(IEpalDbContext context)
+    {
+        var categories = context.Categories;
+        var profiles = await context.Profiles.ToListAsync();
+        var services = context.Services;
+        var serviceOptions = context.ServiceOptions;
+        var _random = new Random();
+
+        foreach (var v in profiles)
+        {
+            int thisProfileServiceCount = Math.Abs(v.GetHashCode() % 5);
+            if (thisProfileServiceCount == 0) continue;
+            var randomCategoriesList = await categories
+                .OrderBy(x => EF.Functions.Random()) 
+                .Take(thisProfileServiceCount)
+                .ToListAsync();
+            if (v.Username.Contains("lol"))
+            {
+                var lolService = await categories.FirstOrDefaultAsync(x => x.Name.Contains("League"));
+                if (lolService is not null)
+                    randomCategoriesList.Add(lolService);
+            }
+
+            var randomServiceList = randomCategoriesList.Select(x => new Service()
+            {
+                Avatar = x.Avatar,
+                Icon = x.Avatar+"?width=100&height=100",
+                Description = x.Description + " _service",
+                Name = "Service of " + x.Name,
+                CategoryId = x.Id,
+                ProfileId = v.Id,
+                ServiceOptions = new List<ServiceOption>()
+            }).ToList();
+            await services.AddRangeAsync(randomServiceList);
+
+            foreach (var t in randomServiceList)
+            {
+                int serviceOptionCount = Math.Abs(Random.Shared.Next(1, 8).GetHashCode() % 4) + 1;
+                for (int i = 0; i < serviceOptionCount; ++i)
+                {
+                    ServiceOption serviceOption = GetRandomServiceOption();
+                    serviceOption.ServiceId = t.Id;
+                    await serviceOptions.AddAsync(serviceOption);
+                }
+            }
+            await context.SaveChangesAsync(new CancellationToken());
+        }
+
+    }
+
     private string GetRandomAvatar()
     {
-        string[] avas = 
+        string[] avas =
         [
             "https://global-oss.epal.gg/data/album/2417123/17261516225287562.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
             "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
@@ -101,7 +181,6 @@ public class SeedController(ISender _, IEpalDbContext context, IPasswordService 
 
     private string GenerateRandomGamerNickname(int minLength, int maxLength, Random random)
     {
-        
         var adjectives = new[]
         {
             "Dark", "Silent", "Furious", "Epic", "Crazy", "Mighty", "Wild", "Shadow", "Ghost", "Rapid", "Stealthy",
