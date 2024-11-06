@@ -23,8 +23,8 @@ public class Handler(IEpalDbContext context, IUserService userService) : IReques
             .Where(x => x.BuyerId == profileId || x.SellerId == profileId)
             .Select(x => new OrderDetails(
                 x.Id, x.Status, x.Created.ToString("dd.MM.yyyy"),
-                new OrderSellerView(x.Seller.Id, x.Seller.Username!, ""),
-                new OrderServiceView(x.ServiceOption.Id, x.ServiceOption.Name))
+                new OrderDetailsSellerView(x.Seller.Id, x.Seller.Username!, ""),
+                new OrderDetailsServiceView(x.ServiceOption.Id, x.ServiceOption.Name))
             )
             .SingleOrDefaultAsync(cancellationToken);
 

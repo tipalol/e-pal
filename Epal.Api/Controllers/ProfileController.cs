@@ -26,9 +26,9 @@ public class ProfileController(ISender sender) : RestController(sender)
     public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel profileModel)
         => await Sender.Send(new UpdateProfileRequest(profileModel));
 
-    [HttpPatch, Authorize]
+    [HttpPost("becomeEpal"), Authorize]
     public async Task<Result> BecomeEpal()
-        => await Sender.Send(new PatchMyProfileType());
+        => await Sender.Send(new BecomeEpalRequest());
 
     [HttpPost("username"), Authorize]
     public async Task<Result> UpdateUsername(string username)

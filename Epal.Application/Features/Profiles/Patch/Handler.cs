@@ -10,21 +10,24 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 
-public record PatchMyProfileType() : IRequest<Result>;
+public record BecomeEpalRequest : IRequest<Result>;
 
-internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<PatchMyProfileType, Result>
+internal sealed class Handler(IEpalDbContext context, IUserService userService) : IRequestHandler<BecomeEpalRequest, Result>
 {
-    public async Task<Result> Handle(PatchMyProfileType request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(BecomeEpalRequest request, CancellationToken cancellationToken)
     {
-        var id = userService.AuthenticatedUser?.Id;
+        var profileId = userService.AuthenticatedUser?.Id;
         var profile = await context.Profiles
-            .Where(x => x.Id == id)
+            .Where(x => x.Id == profileId)
             .SingleOrDefaultAsync(cancellationToken);
 
         if (profile is null)
             return Result.Fail("Profile not found");
+
         profile.ProfileType = ProfileType.Epal;
+
         await context.SaveChangesAsync(cancellationToken);
+
         return Result.Ok();
     }
 }

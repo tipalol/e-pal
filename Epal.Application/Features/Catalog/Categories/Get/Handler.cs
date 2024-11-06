@@ -14,26 +14,14 @@ public class Handler(IEpalDbContext context) : IRequestHandler<CategoriesCatalog
     {
         var query = context.Categories;
 
-        var total = await query.CountAsync(cancellationToken); 
-        IEnumerable<CategoryCatalogView> serviceTypes;
+        var total = await query.CountAsync(cancellationToken);
 
-        if (request.Take == -1)
-        {
-            serviceTypes = await query
-                .OrderByDescending(x => x.Services.Count())
-                .Skip(request.Skip)
-                .Select(x => new CategoryCatalogView(x.Id, x.Name, x.Avatar))
-                .ToArrayAsync(cancellationToken);
-        }
-        else
-        {
-            serviceTypes = await query
-                .OrderByDescending(x => x.Services.Count())
-                .Skip(request.Skip)
-                .Take(request.Take)
-                .Select(x => new CategoryCatalogView(x.Id, x.Name, x.Avatar))
-                .ToArrayAsync(cancellationToken);
-        }
+        var serviceTypes = await query
+            .OrderByDescending(x => x.Services.Count())
+            .Skip(request.Skip)
+            .Take(request.Take)
+            .Select(x => new CategoryCatalogView(x.Id, x.Name, x.Avatar))
+            .ToArrayAsync(cancellationToken);
 
         return PaginatedResult<CategoryCatalogView>.Create(serviceTypes, request.Take, request.Skip, total);
     }
