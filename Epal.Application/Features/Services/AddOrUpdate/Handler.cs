@@ -50,6 +50,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
         {
             Name = serviceDto.Name,
             CategoryId = category.Id,
+            Icon = category.Avatar+"?width=100&height=100",
             Description = serviceDto.Description,
             Tags = serviceDto.Tags,
             ProfileId = profileId
