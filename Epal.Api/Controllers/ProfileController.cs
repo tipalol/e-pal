@@ -3,6 +3,7 @@ using Epal.Application.Common;
 using Epal.Application.Features.Profiles.Get;
 using Epal.Application.Features.Profiles.Get.MyProfile;
 using Epal.Application.Features.Profiles.Models;
+using Epal.Application.Features.Profiles.Patch;
 using Epal.Application.Features.Profiles.Post;
 using Epal.Application.Features.Profiles.UpdateUsername;
 using MediatR;
@@ -24,6 +25,10 @@ public class ProfileController(ISender sender) : RestController(sender)
     [HttpPost, Authorize]
     public async Task<Result<ProfileResponse>> UpdateProfile(ProfileModel profileModel)
         => await Sender.Send(new UpdateProfileRequest(profileModel));
+
+    [HttpPatch, Authorize]
+    public async Task<Result> BecomeEpal()
+        => await Sender.Send(new PatchMyProfileType());
 
     [HttpPost("username"), Authorize]
     public async Task<Result> UpdateUsername(string username)

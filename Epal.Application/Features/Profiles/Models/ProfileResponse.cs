@@ -13,6 +13,7 @@ namespace Epal.Application.Features.Profiles.Models;
     public string Languages { get; set; } = "РУССКИЙ";
     public bool IsMyProfile { get; set; }
     public double Balance { get; set; }
+    public ProfileType ProfileType { get; set; }
 
     public static ProfileResponse FromProfile(Profile profile, Guid? askingId)
     {
@@ -21,6 +22,7 @@ namespace Epal.Application.Features.Profiles.Models;
             Id = profile.Id,
             Username = profile.Username,
             Status = profile.Status,
+            ProfileType = profile.ProfileType,
             Avatar = profile.Avatar,
             Languages = profile.Languages,
             Gender = profile.Gender,
