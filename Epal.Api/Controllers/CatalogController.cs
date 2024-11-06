@@ -12,7 +12,7 @@ namespace Epal.Api.Controllers;
 public class CatalogController(ISender sender) : RestController(sender)
 {
     [HttpGet("categories")]
-    public async Task<PaginatedResult<CategoryCatalogView>> GetCategories(int take = 6, int skip = 0)
+    public async Task<PaginatedResult<CategoryCatalogView>> GetCategories(int take = -1, int skip = 0)
         => await Sender.Send(new CategoriesCatalogRequest(take, skip));
 
     [HttpGet("epals")]
