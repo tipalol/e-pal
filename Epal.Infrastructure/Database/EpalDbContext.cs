@@ -13,6 +13,7 @@ public class EpalDbContext(DbContextOptions<EpalDbContext> options) : DbContext(
     public DbSet<ServiceOption> ServiceOptions { get; private set; }
     public DbSet<Category> Categories { get; private set; }
     public DbSet<Order> Orders { get; private set; }
+    public DbSet<ServiceExtraInfo> ServiceExtraInfos { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

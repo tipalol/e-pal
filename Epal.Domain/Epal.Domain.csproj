@@ -11,4 +11,17 @@
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Enums\ServiceExtraInfoEnums\Style.cs" />
+      <Compile Remove="Enums\ServiceExtraInfoEnums\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Enums\ServiceExtraInfoEnums\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Enums\ServiceExtraInfoEnums\**" />
+    </ItemGroup>
+
 </Project>

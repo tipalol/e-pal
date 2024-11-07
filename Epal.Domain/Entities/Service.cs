@@ -14,6 +14,7 @@ public class Service : Entity
     public Profile Profile { get; set; }
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
+    public ServiceExtraInfo ServiceExtraInfo { get; set; }
 
     public ICollection<ServiceOption> ServiceOptions { get; set; } = [];
 }
