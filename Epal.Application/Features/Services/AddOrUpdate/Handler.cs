@@ -27,7 +27,7 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 
         if (category == null)
             return Result.Fail("Category not found");
-
+        
         if (serviceDto.Id.HasValue)
         {
             var dbService = await context.Services
@@ -35,8 +35,9 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
 
             if (dbService == null)
                 return Result.Fail("Service not found");
-
-            dbService.Name = serviceDto.Name;
+            if (dbService.ProfileId != profileId)
+                return Result.Fail("It's not yours service!");
+            dbService.Name = serviceDto.Name; 
             dbService.Description = serviceDto.Description;
             dbService.CategoryId = serviceDto.CategoryId;
 
