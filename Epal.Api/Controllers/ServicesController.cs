@@ -34,7 +34,7 @@ public class ServicesController(ISender sender) : RestController(sender)
     /// Обновление дополнительной информации о конкретной услуге
     /// </summary>
     [HttpPost("ExtraInfo/{serviceId:guid}"), Authorize]
-    public async Task<Result> AddOrUpdate(ServiceExtraInfoDto serviceExtraInfoDto)
+    public async Task<Result> AddOrUpdateExtraInfo(ServiceExtraInfoDto serviceExtraInfoDto)
         => await Sender.Send(new AddOrUpdateServicesExtraInfoRequest(serviceExtraInfoDto));
 
 

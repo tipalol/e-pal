@@ -39,7 +39,6 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             dbService.Name = serviceDto.Name;
             dbService.Description = serviceDto.Description;
             dbService.CategoryId = serviceDto.CategoryId;
-            dbService.Tags = serviceDto.Tags;
 
             await context.SaveChangesAsync(cancellationToken);
 
@@ -52,7 +51,6 @@ internal sealed class Handler(IEpalDbContext context, IUserService userService) 
             CategoryId = category.Id,
             Icon = category.Avatar+"?width=100&height=100",
             Description = serviceDto.Description,
-            Tags = serviceDto.Tags,
             ProfileId = profileId
         };
 
