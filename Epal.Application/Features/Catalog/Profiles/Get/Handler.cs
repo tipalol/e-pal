@@ -26,7 +26,7 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCa
         var profiles = await query
             .Skip(request.Skip)
             .Take(request.Take)
-            .Select(x => new ProfileView(x.Id, x.Username!, x.Bio, x.Avatar))
+            .Select(x => new ProfileView(x.Id, x.Username!, x.Bio, x.Avatar, x.IsOnline))
             .ToArrayAsync(cancellationToken);
 
         return PaginatedResult<ProfileView>.Create(profiles, request.Take, request.Skip, total);
