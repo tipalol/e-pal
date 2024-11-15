@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 using Epal.Application.Features.Authorize.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,10 +33,7 @@ public static class ApiConfiguration
         services.AddEndpointsApiExplorer();
         services.ConfigureSwagger();
 
-        services.AddSignalR(options =>
-        {
-            options.EnableDetailedErrors = true;
-        });
+        services.AddSignalR(options => { options.EnableDetailedErrors = true; });
 
         return services;
     }
@@ -61,8 +59,8 @@ public static class ApiConfiguration
                     {
                         Reference = new OpenApiReference
                         {
-                            Type=ReferenceType.SecurityScheme,
-                            Id="Bearer"
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
                         }
                     },
                     []
@@ -97,6 +95,24 @@ public static class ApiConfiguration
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     // валидация ключа безопасности
                     ValidateIssuerSigningKey = true,
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        // Явно назначаем UserIdentifier
+                        var user = context.Principal;
+                        if (user != null)
+                        {
+                            var userId = user.FindFirst(ClaimTypes.Sid)?.Value;
+                            if (userId != null)
+                            {
+                                // Устанавливаем идентификатор пользователя
+                                context.HttpContext.Items["UserIdentifier"] = userId;
+                            }
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

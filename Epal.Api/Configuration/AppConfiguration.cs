@@ -17,7 +17,7 @@ public static class AppConfiguration
         app.UseHttpsRedirection();
 
         app.UseRouting();
-        app.MapHub<EpalHub>("/socket");
+        app.MapHub<EpalHub>("/socket").RequireAuthorization();
 
         app.UseCors("AllowAll");
         app.MapControllers();

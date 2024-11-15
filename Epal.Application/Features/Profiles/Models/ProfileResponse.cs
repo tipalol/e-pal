@@ -14,6 +14,7 @@ namespace Epal.Application.Features.Profiles.Models;
     public bool IsMyProfile { get; set; }
     public double Balance { get; set; }
     public ProfileType ProfileType { get; set; }
+    public bool IsOnline { get; set; }
 
     public static ProfileResponse FromProfile(Profile profile, Guid? askingId)
     {
@@ -27,6 +28,7 @@ namespace Epal.Application.Features.Profiles.Models;
             Languages = profile.Languages,
             Gender = profile.Gender,
             Balance = (double)profile.Balance,
+            IsOnline = profile.IsOnline,
             IsMyProfile = askingId != null && profile.Id == askingId
         };
     }

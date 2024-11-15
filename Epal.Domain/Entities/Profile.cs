@@ -14,6 +14,8 @@ public class Profile : DateTrackedEntity
     public string Languages { get; set; } = "Russian";
     
     public decimal Balance { get; set; }
+    public bool IsOnline { get; set; }
+    public DateTime? LastActivityTime { get; set; }
     
     public UserStatus Status { get; set; } = UserStatus.Created;
     public ProfileType ProfileType { get; set; } = ProfileType.User;

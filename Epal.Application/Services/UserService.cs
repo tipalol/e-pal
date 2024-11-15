@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Epal.Application.Services;
 
-public class UserService(IHttpContextAccessor contextAccessor) : IUserService
+public class UserService(IHttpContextAccessor contextAccessor, IEpalDbContext context) : IUserService
 {
     public AuthenticatedUser? AuthenticatedUser => _authenticatedUser ??= Authenticate();
     
@@ -27,9 +27,37 @@ public class UserService(IHttpContextAccessor contextAccessor) : IUserService
             return null;
         
         var authenticatedUser = new AuthenticatedUser(Guid.Parse(id), username, email);
-        
+        _authenticatedUser = authenticatedUser;
         return authenticatedUser;
     }
     
     private ClaimsPrincipal? CurrentUser => contextAccessor.HttpContext?.User;
+    public async Task SetUserOnline(Guid profileId)
+    {
+        var profile = await context.Profiles.FindAsync(profileId);
+        if (profile != null)
+        {
+            profile.IsOnline = true;
+            profile.LastActivityTime = DateTime.UtcNow;
+            CancellationToken cancellationToken = default;
+            await context.SaveChangesAsync(cancellationToken);
+        }
+    }
+
+    public async Task SetUserOffline(Guid profileId)
+    {
+        var profile = await context.Profiles.FindAsync(profileId);
+        if (profile != null)
+        {
+            profile.IsOnline = false;
+            profile.LastActivityTime = DateTime.UtcNow;
+            CancellationToken cancellationToken = default;
+            await context.SaveChangesAsync(cancellationToken);
+        }
+    }
+
+    public Task<DateTime?> GetLastActivityTime(Guid profileId)
+    {
+        throw new NotImplementedException();
+    }
 }
