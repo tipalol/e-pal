@@ -38,6 +38,7 @@ public class Handler(IEpalDbContext context) : IRequestHandler<EpalsByCategoryCa
         {
             null or SortingType.None => query,
             SortingType.Newbies => query.OrderByDescending(x => x.EpalStatusAcquiring),
+            SortingType.Online => query.OrderByDescending(x=>x.IsOnline).ThenByDescending(x=>x.LastActivityTime),
             _ => query
         };
     }
